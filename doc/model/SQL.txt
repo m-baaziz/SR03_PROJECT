@@ -1,0 +1,51 @@
+CREATE TABLE Utilisateur (
+	Email VARCHAR(255) NOT NULL,
+	MotDePasse VARCHAR(255) NOT NULL,
+	Type CHAR() NOT NULL,
+	DateCreation DATE NOT NULL,
+	Nom CHAR(255) NOT NULL,
+	Société CHAR,
+	Telephone INTEGER,
+	StatutUtilisateur BOOLEAN,
+	PRIMARY KEY (Email)
+	CONSTRAINTE CHECK (MoteDePasse > 6),
+	CONSTRAINTE check_Type CHECK (Type IN ('Administrateur', 'Stagiaire')
+);
+
+CREATE TABLE Questionnaire (
+	Sujet CHAR() NOT NULL,
+	StatutQuestion BOOLEAN,
+	PRIMARY KEY (Sujet)
+);
+
+CREATE TABLE Parcours (
+	IdParcours INTEGER(),
+	Email VARCHAR(),
+	Sujet CHAR(),
+	Score INTEGER(),
+	Durée TIME(),
+	Reponses CHAR(),
+	PRIMARY KEY (IdParcours),
+	CONSTRAINTE FOREIGN KEY (Email) REFERENCE Utilisateur(Email),
+	CONSTRAINTE FOREIGN KEY (Sujet) REFERENCE Questionnaire(Sujet),
+);
+
+CREATE TABLE Question (
+	Sujet CHAR() NOT NULL,
+	NomQuestion CHAR() NOT NULL,
+	StatutQuestion BOOLEAN,
+	CONSTRAINTE FOREIGN KEY Sujet REFERENCES Questionnaire(Sujet),
+	CONSTRAINTE pk_Sujet_Question PRIMARY KEY (Sujet, NomQuestion)
+);
+
+CREATE TABLE Reponse (
+	NomReponse CHAR() NOT NULL,
+	StatutReponse BOOLEAN,
+	CONSTRAINTE FOREIGN KEY Sujet REFERENCES Questionnaire(NomQuestion),
+	CONSTRAINTE pk_Sujet_Question PRIMARY KEY (NomQuestion, NomReponse)
+);
+
+
+	
+	
+

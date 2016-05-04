@@ -1,0 +1,34 @@
+Utilisateur (
+	#Email: String,
+	MotDePasse: String,
+	type: {Administrateur, Stagiaire},
+	DateCreation: Date,
+	Societe: String,
+	Telephone: Integer,
+	StatutUtilisateur: Boolean
+);
+
+Questionnaire (
+	#Sujet: String,
+	StatutQuestionnaier: Boolean
+);
+
+Parcours (
+	#Email => Utilisateur(Email),
+	#Sujet => Questionnaire(Sujet),
+	Score: Integer,
+	Duree: Time,
+	Reponse: String
+);
+
+Question (
+	#NomQuestion: String,
+	StatutQuestion Boolean,
+	#Sujet => Questionnaire(Sujet)
+);
+
+Reponse (
+	#NomReponse: String,
+	StatuReponse: Boolean,
+	#NomQuestion=>Question(NomQuestion)
+);
