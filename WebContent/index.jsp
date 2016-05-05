@@ -4,6 +4,6 @@
 		<title> SR03 Project Website </title>
 	</head>
 	<body>
-		<h1> Welcome Boyaaa ! </h1>
+		<h1> Welcome Boyaa ! </h1>
 	</body>
 </html>
