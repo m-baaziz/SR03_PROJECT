@@ -10,11 +10,12 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-	  <servlet-name>Application</servlet-name>
-	  <servlet-class>Application</servlet-class>
+	  <servlet-name>User</servlet-name>
+	  <servlet-class>controllers.UserController</servlet-class>
+	  <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-		<servlet-name>Application</servlet-name>
+		<servlet-name>User</servlet-name>
 		<url-pattern>/</url-pattern>
   </servlet-mapping>
 </web-app>
