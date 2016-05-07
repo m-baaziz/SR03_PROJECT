@@ -1,2 +1,4 @@
 src/db.properties
 build/classes/db.properties
+.DS_Store
+src/.DS_Store
