@@ -21,9 +21,11 @@ public class UserController extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("Dans le do get");
+		System.out.println(dao.getAllUsers().get(0).getEmail());
 		request.setAttribute("users", dao.getAllUsers());
 		RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+		
 		view.forward(request, response);
 	}
 }
