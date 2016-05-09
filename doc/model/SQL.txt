@@ -26,26 +26,22 @@ CREATE TABLE Parcours (
 	Durée TIME(),
 	Reponses CHAR(),
 	PRIMARY KEY (IdParcours),
-	CONSTRAINTE FOREIGN KEY (Email) REFERENCE Utilisateur(Email),
-	CONSTRAINTE FOREIGN KEY (Sujet) REFERENCE Questionnaire(Sujet),
+	CONSTRAINTE FOREIGN KEY (Email) REFERENCE Utilisateur(Email) ON DELETE CASCADE,
+	CONSTRAINTE FOREIGN KEY (Sujet) REFERENCE Questionnaire(Sujet)
 );
 
 CREATE TABLE Question (
 	Sujet CHAR() NOT NULL,
 	NomQuestion CHAR() NOT NULL,
 	StatutQuestion BOOLEAN,
-	CONSTRAINTE FOREIGN KEY Sujet REFERENCES Questionnaire(Sujet),
-	CONSTRAINTE pk_Sujet_Question PRIMARY KEY (Sujet, NomQuestion)
+	CONSTRAINTE FOREIGN KEY Sujet REFERENCES Questionnaire(Sujet) ON DELETE CASCADE
 );
 
 CREATE TABLE Reponse (
 	NomReponse CHAR() NOT NULL,
 	StatutReponse BOOLEAN,
-	CONSTRAINTE FOREIGN KEY Sujet REFERENCES Questionnaire(NomQuestion),
-	CONSTRAINTE pk_Sujet_Question PRIMARY KEY (NomQuestion, NomReponse)
+	CONSTRAINTE FOREIGN KEY Sujet REFERENCES Questionnaire(NomQuestion) ON DELETE CASCADE
 );
 
-
-	
 	
 
