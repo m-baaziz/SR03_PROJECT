@@ -20,7 +20,7 @@ public class UserDao {
 	
 	public boolean addUser(User user) {
 		try {
-			String sqlQuery = "INSERT INTO USERS ('email', 'password') VALUES (?, ?)";
+			String sqlQuery = "INSERT INTO USER ('email', 'password') VALUES (?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setString(1, user.getEmail());
 			preparedStatement.setString(2, user.getPassword());

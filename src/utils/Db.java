@@ -22,10 +22,9 @@ public class Db {
 	            String url = prop.getProperty("url");  
 	            String user = prop.getProperty("user");  
 	            String password = prop.getProperty("password");  
-	            System.out.println("juste avant class for");
 	            Class.forName(driver);  
 	            connection = DriverManager.getConnection(url, user, password);
-	            System.out.println("Connection a la base reussie !!");
+	            System.out.println("Connection to database");
 			}  catch (ClassNotFoundException e) {  
 	            e.printStackTrace();  
 	        } catch (SQLException e) {  

@@ -1,47 +1,58 @@
-CREATE TABLE Utilisateur (
-	Email VARCHAR(255) NOT NULL,
-	MotDePasse VARCHAR(255) NOT NULL,
-	Type CHAR() NOT NULL,
-	DateCreation DATE NOT NULL,
-	Nom CHAR(255) NOT NULL,
-	Société CHAR,
-	Telephone INTEGER,
-	StatutUtilisateur BOOLEAN,
-	PRIMARY KEY (Email)
-	CONSTRAINTE CHECK (MoteDePasse > 6),
-	CONSTRAINTE check_Type CHECK (Type IN ('Administrateur', 'Stagiaire')
+CREATE TABLE user (
+	email VARCHAR(255) NOT NULL,
+	password VARCHAR(255) NOT NULL,
+	type VARCHAR(255) NOT NULL,
+	creationDate DATE NOT NULL,
+	name VARCHAR(255) NOT NULL,
+	company VARCHAR(255),
+	phone INTEGER,
+	isActive BOOLEAN,
+	PRIMARY KEY (email),
+	CHECK (LEN(password) > 6),
+	CHECK (type IN ('administrator', 'intern'))
 );
 
-CREATE TABLE Questionnaire (
-	Sujet CHAR() NOT NULL,
-	StatutQuestion BOOLEAN,
-	PRIMARY KEY (Sujet)
+CREATE TABLE test (
+	subject VARCHAR(255) NOT NULL,
+	isActive BOOLEAN,
+	PRIMARY KEY (subject)
 );
 
-CREATE TABLE Parcours (
-	IdParcours INTEGER(),
-	Email VARCHAR(),
-	Sujet CHAR(),
-	Score INTEGER(),
-	Durée TIME(),
-	Reponses CHAR(),
-	PRIMARY KEY (IdParcours),
-	CONSTRAINTE FOREIGN KEY (Email) REFERENCE Utilisateur(Email) ON DELETE CASCADE,
-	CONSTRAINTE FOREIGN KEY (Sujet) REFERENCE Questionnaire(Sujet)
+CREATE TABLE record (
+	recordId INTEGER NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	subject VARCHAR(255) NOT NULL,
+	score INTEGER,
+	duration TIME,
+	PRIMARY KEY (recordId),
+	FOREIGN KEY (subject) REFERENCES test(subject),
+	FOREIGN KEY (email) REFERENCES user(email) ON DELETE CASCADE
 );
 
-CREATE TABLE Question (
-	Sujet CHAR() NOT NULL,
-	NomQuestion CHAR() NOT NULL,
-	StatutQuestion BOOLEAN,
-	CONSTRAINTE FOREIGN KEY Sujet REFERENCES Questionnaire(Sujet) ON DELETE CASCADE
+CREATE TABLE question (
+	questionId INTEGER NOT NULL,
+	subject VARCHAR(255) NOT NULL,
+	questionText TEXT NOT NULL,
+	isActive BOOLEAN,
+	PRIMARY KEY (questionID),
+	FOREIGN KEY (subject) REFERENCES test(subject) ON DELETE CASCADE
 );
 
-CREATE TABLE Reponse (
-	NomReponse CHAR() NOT NULL,
-	StatutReponse BOOLEAN,
-	CONSTRAINTE FOREIGN KEY Sujet REFERENCES Questionnaire(NomQuestion) ON DELETE CASCADE
+CREATE TABLE answer (
+	answerId INTEGER NOT NULL,
+	questionId INTEGER NOT NULL,
+	answerText TEXT NOT NULL,
+	isActive BOOLEAN,
+	PRIMARY KEY (answerId),
+	FOREIGN KEY (questionId) REFERENCES question(questionId) ON DELETE CASCADE
 );
 
+CREATE TABLE recordAnswers (
+	recordId INTEGER NOT NULL,
+	answerId INTEGER NOT NULL,
+	PRIMARY KEY (recordId, answerId),
+	FOREIGN KEY (recordId) REFERENCES record(recordId) ON DELETE CASCADE,
+	FOREIGN KEY (answerId) REFERENCES answer(answerId) ON DELETE CASCADE
+);
 	
 
