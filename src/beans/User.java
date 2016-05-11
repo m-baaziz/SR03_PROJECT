@@ -16,15 +16,20 @@ public class User {
 	
 	public User() {
 		this.creationDate = new Date(Calendar.getInstance().getTime().getTime());
+		this.setEmail("");
+		this.setCompany("");
+		this.setName("");
+		this.setPhone(0);
+		this.setType("intern");
 		this.activate();
 	}
 	public User(String email, String password, String type, Date creationDate, String name, String company, Integer phone) throws Exception {
 		if (this.setEmail(email) && this.setPassword(password) && this.setType(type) 
 				&& this.setName(name) && this.setCompany(company) && this.setPhone(phone)) {
-			this.creationDate = creationDate;
+			this.setCreationDate(creationDate);
 			this.activate();
 		} else {
-			throw new Exception("Invalid parametersaaaa");
+			throw new Exception("Invalid parameters");
 		}
 	}
 	public User(String email, String password, String type, String name) throws Exception {
@@ -34,7 +39,7 @@ public class User {
 			this.creationDate = new Date(Calendar.getInstance().getTime().getTime());
 			this.activate();
 		} else {
-			throw new Exception("Invalid parametersbbbbb");
+			throw new Exception("Invalid parameters");
 		}
 	}
 	
@@ -68,8 +73,11 @@ public class User {
 		return true;
 	}
 	public boolean setPassword(String password) {
-		this.password = password;
-		return true;
+		if (password.length() >= 6) {
+			this.password = password;
+			return true;
+		}
+		return false;
 	}
 	public boolean setType(String type) {
 		if (type.equals("administrator") || type.equals("intern")) {
@@ -78,6 +86,10 @@ public class User {
 		} else {
 			return false;
 		}
+	}
+	public boolean setCreationDate(Date date) {
+		this.creationDate = date;
+		return true;
 	}
 	public boolean setName(String name) {
 		this.name = name;
@@ -98,5 +110,12 @@ public class User {
 	public boolean desactivate() {
 		this.isActive = false;
 		return true;
+	}
+	
+	public boolean isAdmin() {
+		return this.getType().equals("administrator");
+	}
+	public boolean matchPassword(String password) {
+		return this.getPassword().equals(password);
 	}
 }

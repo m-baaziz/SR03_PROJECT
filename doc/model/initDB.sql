@@ -8,7 +8,7 @@ CREATE TABLE user (
 	phone INTEGER,
 	isActive BOOLEAN,
 	PRIMARY KEY (email),
-	CHECK (LEN(password) > 6),
+	CHECK (LEN(password) >= 6),
 	CHECK (type IN ('administrator', 'intern'))
 );
 
@@ -43,6 +43,7 @@ CREATE TABLE answer (
 	questionId INTEGER NOT NULL,
 	answerText TEXT NOT NULL,
 	isActive BOOLEAN,
+	isTrue BOOLEAN,
 	PRIMARY KEY (answerId),
 	FOREIGN KEY (questionId) REFERENCES question(questionId) ON DELETE CASCADE
 );

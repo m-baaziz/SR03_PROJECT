@@ -12,28 +12,14 @@
 		<title> SR03 Project Website </title>
 	</head>
 	<body>
-		<h1> Welcome Boyaa ! </h1>
-		<table>
-			<thead>
-				<tr>
-					<th>Email</th>
-					<th>Password</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${users}" var="user">
-					<tr>
-						<td><c:out value="${user.getEmail()}" /></td>
-						<td><c:out value="${user.getPassword()}" /></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
-		<form method="post" action="users">
-			<div>Name : <input type="text" name="name" /></div>
-			<div>E-mail : <input type="text" name="email" /></div>
-			<div>Password : <input type="password" name="password" /></div>
-			<div><input type="submit" value="Send" /></div>
+		<h1> Login </h1>
+		<c:forEach items="${errors}" var="error">
+			<div><c:out value="${error}" /></div>
+		</c:forEach>
+		<form method="post" action="authentication">
+			<input type="text" name="email" />
+			<input type="password" name="password" />
+			<input type="submit" />
 		</form>
 	</body>
 </html>

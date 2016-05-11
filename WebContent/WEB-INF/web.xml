@@ -17,4 +17,12 @@
 		<servlet-name>UserController</servlet-name>
 		<url-pattern>/users</url-pattern>
   </servlet-mapping>
+  <servlet>
+	  <servlet-name>AuthenticationController</servlet-name>
+	  <servlet-class>controllers.AuthenticationController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+		<servlet-name>AuthenticationController</servlet-name>
+		<url-pattern>/authentication</url-pattern>
+  </servlet-mapping>
 </web-app>

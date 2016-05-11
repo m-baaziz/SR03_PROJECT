@@ -39,20 +39,26 @@ public class UserDao {
 	}
 	
 	public User getUserByEmail(String email) {
+		User user = new User();
 		try {
 			String sqlQuery = "SELECT * FROM user WHERE email=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setString(1, email);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-				User user = new User(rs.getString("email"), rs.getString("password"), rs.getString("type"), 
-						rs.getDate("creationDate"), rs.getString("name"), rs.getString("company"), new Integer(rs.getInt("phone")));
-				return user;
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				user.setType(rs.getString("type"));
+				user.setCreationDate(rs.getDate("creationDate"));
+				user.setName(rs.getString("name"));
+				user.setCompany(rs.getString("company"));
+				user.setPhone(rs.getInt("phone"));
 			}
 		} catch(Exception e) {
+			System.out.println("dans catch");
 			e.printStackTrace();
 		}
-		return null;
+		return user;
 	}
 	
 	public List<User> getAllUsers() {

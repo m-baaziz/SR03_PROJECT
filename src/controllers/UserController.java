@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,9 +23,12 @@ public class UserController extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("users", dao.getAllUsers());
-		RequestDispatcher view = request.getRequestDispatcher("index.jsp");
-		
+		try {
+			request.setAttribute("users", dao.getAllUsers());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		RequestDispatcher view = request.getRequestDispatcher("users/index.jsp");
 		view.forward(request, response);
 	}
 	
@@ -35,7 +40,7 @@ public class UserController extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("users", dao.getAllUsers());
-		RequestDispatcher view = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("users/index.jsp");
 		view.forward(request, response);
 	}
 }
