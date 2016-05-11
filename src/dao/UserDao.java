@@ -20,10 +20,16 @@ public class UserDao {
 	
 	public boolean addUser(User user) {
 		try {
-			String sqlQuery = "INSERT INTO USER ('email', 'password') VALUES (?, ?)";
+			String sqlQuery = "INSERT INTO USER ('email', 'password', 'type', 'name', 'company', 'phone', 'isActive') "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setString(1, user.getEmail());
 			preparedStatement.setString(2, user.getPassword());
+			preparedStatement.setString(3, user.getType());
+			preparedStatement.setString(4, user.getName());
+			preparedStatement.setString(5, user.getCompany());
+			preparedStatement.setInt(6, user.getPhone());
+			preparedStatement.setBoolean(7, user.isActive());
 			preparedStatement.executeUpdate();
 			return true;
 		} catch(SQLException e) {
@@ -33,20 +39,20 @@ public class UserDao {
 	}
 	
 	public User getUserByEmail(String email) {
-		User user = new User();
 		try {
 			String sqlQuery = "SELECT * FROM users WHERE email=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setString(1, email);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-				user.setEmail(rs.getString("email"));
-				user.setPassword((rs.getString("password")));
+				User user = new User(rs.getString("email"), rs.getString("password"), rs.getString("type"), 
+						rs.getDate("creationDate"), rs.getString("name"), rs.getString("company"), new Integer(rs.getInt("phone")));
+				return user;
 			}
-		} catch(SQLException e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return user;
+		return null;
 	}
 	
 	public List<User> getAllUsers() {
@@ -56,12 +62,11 @@ public class UserDao {
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				User tmp = new User();
-				tmp.setEmail(rs.getString("email"));
-				tmp.setPassword((rs.getString("password")));
+				User tmp = new User(rs.getString("email"), rs.getString("password"), rs.getString("type"), 
+						rs.getDate("creationDate"), rs.getString("name"), rs.getString("company"), new Integer(rs.getInt("phone")));
 				users.add(tmp);
 			}
-		} catch(SQLException e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		return users;

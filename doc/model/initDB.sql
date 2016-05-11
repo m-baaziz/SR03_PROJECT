@@ -2,7 +2,7 @@ CREATE TABLE user (
 	email VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	type VARCHAR(255) NOT NULL,
-	creationDate DATE NOT NULL,
+	creationDate DATETIME DEFAULT CURRENT_TIMESTAMP,
 	name VARCHAR(255) NOT NULL,
 	company VARCHAR(255),
 	phone INTEGER,
@@ -19,7 +19,7 @@ CREATE TABLE test (
 );
 
 CREATE TABLE record (
-	recordId INTEGER NOT NULL,
+	recordId INTEGER NOT NULL AUTO_INCREMENT,
 	email VARCHAR(255) NOT NULL,
 	subject VARCHAR(255) NOT NULL,
 	score INTEGER,
@@ -30,7 +30,7 @@ CREATE TABLE record (
 );
 
 CREATE TABLE question (
-	questionId INTEGER NOT NULL,
+	questionId INTEGER NOT NULL AUTO_INCREMENT,
 	subject VARCHAR(255) NOT NULL,
 	questionText TEXT NOT NULL,
 	isActive BOOLEAN,
@@ -39,7 +39,7 @@ CREATE TABLE question (
 );
 
 CREATE TABLE answer (
-	answerId INTEGER NOT NULL,
+	answerId INTEGER NOT NULL AUTO_INCREMENT,
 	questionId INTEGER NOT NULL,
 	answerText TEXT NOT NULL,
 	isActive BOOLEAN,
