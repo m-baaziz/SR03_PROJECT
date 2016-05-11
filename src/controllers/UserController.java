@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.User;
 import dao.UserDao;
 
 public class UserController extends HttpServlet {
@@ -23,6 +24,18 @@ public class UserController extends HttpServlet {
 		request.setAttribute("users", dao.getAllUsers());
 		RequestDispatcher view = request.getRequestDispatcher("index.jsp");
 		
+		view.forward(request, response);
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			User user = new User(request.getParameter("email"), request.getParameter("password"), "intern", request.getParameter("name"));
+			dao.addUser(user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		request.setAttribute("users", dao.getAllUsers());
+		RequestDispatcher view = request.getRequestDispatcher("index.jsp");
 		view.forward(request, response);
 	}
 }

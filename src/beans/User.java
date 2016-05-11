@@ -24,7 +24,17 @@ public class User {
 			this.creationDate = creationDate;
 			this.activate();
 		} else {
-			throw new Exception("Invalid parameters");
+			throw new Exception("Invalid parametersaaaa");
+		}
+	}
+	public User(String email, String password, String type, String name) throws Exception {
+		if (this.setEmail(email) && this.setPassword(password) && this.setType(type) && this.setName(name)) {
+			this.setCompany("");
+			this.setPhone(0);
+			this.creationDate = new Date(Calendar.getInstance().getTime().getTime());
+			this.activate();
+		} else {
+			throw new Exception("Invalid parametersbbbbb");
 		}
 	}
 	
@@ -62,7 +72,7 @@ public class User {
 		return true;
 	}
 	public boolean setType(String type) {
-		if (type == "administrator" || type == "intern") {
+		if (type.equals("administrator") || type.equals("intern")) {
 			this.type = type;
 			return true;
 		} else {

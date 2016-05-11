@@ -20,7 +20,7 @@ public class UserDao {
 	
 	public boolean addUser(User user) {
 		try {
-			String sqlQuery = "INSERT INTO USER ('email', 'password', 'type', 'name', 'company', 'phone', 'isActive') "
+			String sqlQuery = "INSERT INTO user (email, password, type, name, company, phone, isActive) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setString(1, user.getEmail());
@@ -40,7 +40,7 @@ public class UserDao {
 	
 	public User getUserByEmail(String email) {
 		try {
-			String sqlQuery = "SELECT * FROM users WHERE email=?";
+			String sqlQuery = "SELECT * FROM user WHERE email=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setString(1, email);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -58,7 +58,7 @@ public class UserDao {
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<User>();
 		try {
-			String sqlQuery = "SELECT * FROM users";
+			String sqlQuery = "SELECT * FROM user";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
