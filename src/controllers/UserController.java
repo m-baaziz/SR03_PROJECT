@@ -25,6 +25,9 @@ public class UserController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			request.setAttribute("users", dao.getAllUsers());
+			if (request.getAttribute("errors") != null) {
+				System.out.println("pas null");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

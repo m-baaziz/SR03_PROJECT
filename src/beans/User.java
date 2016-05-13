@@ -113,6 +113,7 @@ public class User {
 	}
 	
 	public boolean isAdmin() {
+		System.out.println("dans is admin");
 		return this.getType().equals("administrator");
 	}
 	public boolean matchPassword(String password) {

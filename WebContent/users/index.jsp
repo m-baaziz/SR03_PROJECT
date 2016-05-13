@@ -29,11 +29,13 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<form method="post" action="users">
-			<div>Name : <input type="text" name="name" /></div>
-			<div>E-mail : <input type="text" name="email" /></div>
-			<div>Password : <input type="password" name="password" /></div>
-			<div><input type="submit" value="Send" /></div>
-		</form>
+		<c:if test="${currentUser.isAdmin()}">
+			<form method="post" action="users">
+				<div>Name : <input type="text" name="name" /></div>
+				<div>E-mail : <input type="text" name="email" /></div>
+				<div>Password : <input type="password" name="password" /></div>
+				<div><input type="submit" value="Send" /></div>
+			</form>
+		</c:if>
 	</body>
 </html>

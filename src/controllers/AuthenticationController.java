@@ -22,6 +22,10 @@ public class AuthenticationController extends HttpServlet {
 		dao = new UserDao();
 	}
 	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("authentication/index.jsp").forward(request, response);
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -37,11 +41,12 @@ public class AuthenticationController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("error", errors);
+		request.setAttribute("errors", errors);
 		if (errors.isEmpty()) {
 			response.sendRedirect("users");
 		} else {
-			response.sendRedirect("index.jsp");
+			System.out.println("dans out");
+			response.sendRedirect("authentication");
 		}
 	}
 }
