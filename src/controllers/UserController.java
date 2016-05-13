@@ -1,8 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,9 +23,6 @@ public class UserController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			request.setAttribute("users", dao.getAllUsers());
-			if (request.getAttribute("errors") != null) {
-				System.out.println("pas null");
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

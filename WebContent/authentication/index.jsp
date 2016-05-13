@@ -14,7 +14,6 @@
 	<body>
 		<h1> Login </h1>
 		<c:forEach items="${errors}" var="error">
-			adaz
 			<div><c:out value="${error}" /></div>
 		</c:forEach>
 		<form method="post" action="authentication">

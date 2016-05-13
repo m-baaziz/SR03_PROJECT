@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import beans.User;
 import dao.UserDao;
@@ -33,8 +34,8 @@ public class AuthenticationController extends HttpServlet {
 		try {
 			User currentUser = dao.getUserByEmail(email);
 			if (currentUser.matchPassword(password)) {
-				request.setAttribute("users", dao.getAllUsers());
-				request.setAttribute("currentUser", currentUser);
+				HttpSession session = request.getSession(true);
+				session.setAttribute("currentUser", currentUser);
 			} else {
 				errors.add("Invalid credentials");
 			}
@@ -45,8 +46,8 @@ public class AuthenticationController extends HttpServlet {
 		if (errors.isEmpty()) {
 			response.sendRedirect("users");
 		} else {
-			System.out.println("dans out");
-			response.sendRedirect("authentication");
+			RequestDispatcher view = request.getRequestDispatcher("authentication/index.jsp");
+			view.forward(request, response);
 		}
 	}
 }

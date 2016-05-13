@@ -29,7 +29,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<c:if test="${currentUser.isAdmin()}">
+		<c:if test="${sessionScope.currentUser.isAdmin()}">
 			<form method="post" action="users">
 				<div>Name : <input type="text" name="name" /></div>
 				<div>E-mail : <input type="text" name="email" /></div>
