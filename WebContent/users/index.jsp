@@ -30,12 +30,23 @@
 			</tbody>
 		</table>
 		<c:if test="${sessionScope.currentUser.isAdmin()}">
+			<br/>
+			Add a new user : 
+			<br/>
 			<form method="post" action="users">
 				<div>Name : <input type="text" name="name" /></div>
 				<div>E-mail : <input type="text" name="email" /></div>
 				<div>Password : <input type="password" name="password" /></div>
+				<div>Type : 
+					<select name="type">
+						<option value="administrator">Administrator</option>
+						<option value="intern">Intern</option>
+					</select>
+				</div>
 				<div><input type="submit" value="Send" /></div>
 			</form>
 		</c:if>
+		<br/>
+		<a href="users?action=logout">Logout</a>
 	</body>
 </html>

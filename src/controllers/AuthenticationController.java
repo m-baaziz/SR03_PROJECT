@@ -33,7 +33,7 @@ public class AuthenticationController extends HttpServlet {
 		List<String> errors = new ArrayList<String>();
 		try {
 			User currentUser = dao.getUserByEmail(email);
-			if (currentUser.matchPassword(password)) {
+			if (currentUser != null && !password.isEmpty() && currentUser.matchPassword(password)) {
 				HttpSession session = request.getSession(true);
 				session.setAttribute("currentUser", currentUser);
 			} else {

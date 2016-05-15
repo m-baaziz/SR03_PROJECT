@@ -16,7 +16,7 @@ public class Db {
 		if (connection == null) {
 			try {
 				Properties prop = new Properties();  
-	            InputStream inputStream = Db.class.getClassLoader().getResourceAsStream("/db.properties");  
+	            InputStream inputStream = Db.class.getClassLoader().getResourceAsStream("/db.properties.local");  
 	            prop.load(inputStream);  
 	            String driver = prop.getProperty("driver");  
 	            String url = prop.getProperty("url");  
