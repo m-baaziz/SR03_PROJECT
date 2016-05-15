@@ -11,7 +11,7 @@ public class User {
 	private Date creationDate; // database ceationDate is initialized when the user is inserted
 	private String name;
 	private String company;
-	private Integer phone;
+	private String phone;
 	private boolean isActive;
 	
 	public User() {
@@ -19,11 +19,11 @@ public class User {
 		this.setEmail("");
 		this.setCompany("");
 		this.setName("");
-		this.setPhone(0);
+		this.setPhone("");
 		this.setType("intern");
 		this.activate();
 	}
-	public User(String email, String password, String type, Date creationDate, String name, String company, Integer phone) throws Exception {
+	public User(String email, String password, String type, Date creationDate, String name, String company, String phone) throws Exception {
 		if (this.setEmail(email) && this.setPassword(password) && this.setType(type) 
 				&& this.setName(name) && this.setCompany(company) && this.setPhone(phone)) {
 			this.setCreationDate(creationDate);
@@ -35,7 +35,7 @@ public class User {
 	public User(String email, String password, String type, String name) throws Exception {
 		if (this.setEmail(email) && this.setPassword(password) && this.setType(type) && this.setName(name)) {
 			this.setCompany("");
-			this.setPhone(0);
+			this.setPhone("");
 			this.creationDate = new Date(Calendar.getInstance().getTime().getTime());
 			this.activate();
 		} else {
@@ -61,7 +61,7 @@ public class User {
 	public String getCompany() {
 		return company;
 	}
-	public Integer getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 	public boolean isActive() {
@@ -99,7 +99,7 @@ public class User {
 		this.company = company;
 		return true;
 	}
-	public boolean setPhone(Integer phone) {
+	public boolean setPhone(String phone) {
 		this.phone = phone;
 		return true;
 	}

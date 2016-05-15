@@ -5,7 +5,7 @@ CREATE TABLE user (
 	creationDate TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	name VARCHAR(255) NOT NULL,
 	company VARCHAR(255),
-	phone INTEGER,
+	phone VARCHAR(25),
 	isActive BOOLEAN,
 	PRIMARY KEY (email),
 	CHECK (LEN(password) >= 6),

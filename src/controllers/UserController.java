@@ -21,22 +21,29 @@ public class UserController extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher view = request.getRequestDispatcher("users/index.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("user/index.jsp");
 		if (request.getSession().getAttribute("currentUser") == null) {
 			response.sendRedirect("index.jsp");
 			return;
 		}
 		try {
-			if (request.getParameter("action") != null && request.getParameter("action").equals("logout")) {
-				request.getSession().removeAttribute("currentUser");
-				response.sendRedirect("index.jsp");
-				return;
+			if (request.getParameter("action") != null) {
+				if (request.getParameter("action").equals("logout")) {
+					request.getSession().removeAttribute("currentUser");
+					response.sendRedirect("index.jsp");
+					return;
+				}
+				if (request.getParameter("action").equals("show")) {
+					view = request.getRequestDispatcher("user/show.jsp");
+					view.forward(request, response);
+					return;
+				}
 			}
 			request.setAttribute("users", dao.getAllUsers());
+			view.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		view.forward(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,7 +54,7 @@ public class UserController extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("users", dao.getAllUsers());
-		RequestDispatcher view = request.getRequestDispatcher("users/index.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("user/index.jsp");
 		view.forward(request, response);
 	}
 }

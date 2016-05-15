@@ -44,7 +44,7 @@ public class AuthenticationController extends HttpServlet {
 		}
 		request.setAttribute("errors", errors);
 		if (errors.isEmpty()) {
-			response.sendRedirect("users");
+			response.sendRedirect("user");
 		} else {
 			RequestDispatcher view = request.getRequestDispatcher("authentication/index.jsp");
 			view.forward(request, response);

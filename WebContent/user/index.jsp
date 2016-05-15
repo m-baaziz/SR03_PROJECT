@@ -13,6 +13,7 @@
 	</head>
 	<body>
 		<h1> Welcome <c:out value="${currentUser.getName()}" /> ! </h1>
+		<h2><a href="user?action=show">Profile</a></h2>
 		<table>
 			<thead>
 				<tr>
@@ -47,6 +48,6 @@
 			</form>
 		</c:if>
 		<br/>
-		<a href="users?action=logout">Logout</a>
+		<a href="user?action=logout">Logout</a>
 	</body>
 </html>

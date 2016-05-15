@@ -28,7 +28,7 @@ public class UserDao {
 			preparedStatement.setString(3, user.getType());
 			preparedStatement.setString(4, user.getName());
 			preparedStatement.setString(5, user.getCompany());
-			preparedStatement.setInt(6, user.getPhone());
+			preparedStatement.setString(6, user.getPhone());
 			preparedStatement.setBoolean(7, user.isActive());
 			preparedStatement.executeUpdate();
 			return true;
@@ -52,7 +52,7 @@ public class UserDao {
 				user.setCreationDate(rs.getDate("creationDate"));
 				user.setName(rs.getString("name"));
 				user.setCompany(rs.getString("company"));
-				user.setPhone(rs.getInt("phone"));
+				user.setPhone(rs.getString("phone"));
 			}
 		} catch(Exception e) {
 			System.out.println("dans catch");
@@ -69,7 +69,7 @@ public class UserDao {
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				User tmp = new User(rs.getString("email"), rs.getString("password"), rs.getString("type"), 
-						rs.getDate("creationDate"), rs.getString("name"), rs.getString("company"), new Integer(rs.getInt("phone")));
+						rs.getDate("creationDate"), rs.getString("name"), rs.getString("company"), rs.getString("phone"));
 				users.add(tmp);
 			}
 		} catch(Exception e) {
