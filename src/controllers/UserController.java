@@ -38,6 +38,11 @@ public class UserController extends HttpServlet {
 					view.forward(request, response);
 					return;
 				}
+				if (request.getParameter("action").equals("edit")) {
+					view = request.getRequestDispatcher("user/edit.jsp");
+					view.forward(request, response);
+					return;
+				}
 			}
 			request.setAttribute("users", dao.getAllUsers());
 			view.forward(request, response);
@@ -48,6 +53,28 @@ public class UserController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			
+			//  ------ PUT METHODS -------------
+			
+			if (request.getParameter("_method") != null && request.getParameter("_method").equals("put")) {
+				User currentUser = (User) request.getSession().getAttribute("currentUser");
+				currentUser.setName(request.getParameter("name"));
+				currentUser.setType(request.getParameter("type"));
+				currentUser.setCompany(request.getParameter("company"));
+				currentUser.setPhone(request.getParameter("phone"));
+				boolean isActive = Boolean.valueOf(request.getParameter("isActive"));
+				if (isActive) {
+					currentUser.activate();
+				} else {
+					currentUser.desactivate();
+				}
+				dao.updateUser(currentUser);
+				response.sendRedirect("user?action=show");
+				return;
+			}
+			
+			//  ------ POST METHODS -------------
+			
 			User user = new User(request.getParameter("email"), request.getParameter("password"), request.getParameter("type"), request.getParameter("name"));
 			dao.addUser(user);
 		} catch (Exception e) {

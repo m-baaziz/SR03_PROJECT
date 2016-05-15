@@ -80,7 +80,7 @@ public class User {
 		return false;
 	}
 	public boolean setType(String type) {
-		if (type.equals("administrator") || type.equals("intern")) {
+		if (type != null && type.equals("administrator") || type.equals("intern")) {
 			this.type = type;
 			return true;
 		} else {
@@ -116,6 +116,6 @@ public class User {
 		return this.getType().equals("administrator");
 	}
 	public boolean matchPassword(String password) {
-		return this.getPassword().equals(password);
+		return (this.getPassword() != null && this.getPassword().equals(password));
 	}
 }

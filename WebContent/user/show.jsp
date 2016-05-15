@@ -14,6 +14,7 @@
 	<body>
 		<h1> <c:out value="${currentUser.getName()}" /> profile </h1>
 		<br/>
+		<a href="user?action=edit">Edit</a>
 		<br/>
 		<table>
 			<tbody>

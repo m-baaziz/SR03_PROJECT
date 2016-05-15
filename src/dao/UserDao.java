@@ -38,6 +38,25 @@ public class UserDao {
 		}
 	}
 	
+	public boolean updateUser(User user) {
+		try {
+			String sqlQuery = "UPDATE user SET name=?, type=?, company=?, phone=?, isActive=? "
+					+ "WHERE email=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+			preparedStatement.setString(1, user.getName());
+			preparedStatement.setString(2, user.getType());
+			preparedStatement.setString(3, user.getCompany());
+			preparedStatement.setString(4, user.getPhone());
+			preparedStatement.setBoolean(5, user.isActive());
+			preparedStatement.setString(6, user.getEmail());
+			preparedStatement.executeUpdate();
+			return true;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 	public User getUserByEmail(String email) {
 		User user = new User();
 		try {
