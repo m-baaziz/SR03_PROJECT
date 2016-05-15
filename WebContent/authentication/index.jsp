@@ -17,9 +17,9 @@
 			<div><c:out value="${error}" /></div>
 		</c:forEach>
 		<form method="post" action="authentication">
-			<input type="text" name="email" />
-			<input type="password" name="password" />
-			<input type="submit" />
+			<div>Email : <input type="text" name="email" /></div>
+			<div>Password : <input type="password" name="password" /></div>
+			<div><input type="submit" value="Send" /></div>
 		</form>
 	</body>
 </html>

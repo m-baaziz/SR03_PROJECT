@@ -1,4 +1,6 @@
 src/db.properties
 build/classes/db.properties
+src/db.properties.local
+build/classes/db.properties.local
 .DS_Store
 src/.DS_Store
