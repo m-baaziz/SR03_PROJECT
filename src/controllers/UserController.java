@@ -1,7 +1,15 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.User;
 import dao.UserDao;
+import utils.Mailer;
 
 public class UserController extends HttpServlet {
 	
@@ -74,9 +83,23 @@ public class UserController extends HttpServlet {
 			}
 			
 			//  ------ POST METHODS -------------
-			
-			User user = new User(request.getParameter("email"), request.getParameter("password"), request.getParameter("type"), request.getParameter("name"));
-			dao.addUser(user);
+			if (request.getParameter("email") != null && !request.getParameter("email").isEmpty()) {
+				User user = new User(request.getParameter("email"), request.getParameter("type"), request.getParameter("name"));
+				if (dao.addUser(user)) {
+					Session session = Mailer.getSession();
+					Message message = new MimeMessage(session);
+					message.setFrom(new InternetAddress("sr03project@outlook.com"));
+					message.setRecipients(Message.RecipientType.TO,
+						InternetAddress.parse(request.getParameter("email")));
+					message.setSubject("SR03 password information");
+					message.setText("Dear " + request.getParameter("name") + ","
+						+ "\n\n " + "Here is your account credentials : \n\n"
+								+ "   email : " + user.getEmail() + "\n"
+								+ "   password : " + user.getPassword());
+
+					Transport.send(message);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -2,5 +2,7 @@ src/db.properties
 build/classes/db.properties
 src/db.properties.local
 build/classes/db.properties.local
+src/mailer.properties
+build/classes/mailer.properties
 .DS_Store
 src/.DS_Store

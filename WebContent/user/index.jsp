@@ -12,8 +12,9 @@
 		<title> SR03 Project Website </title>
 	</head>
 	<body>
-		<h1> Welcome <c:out value="${currentUser.getName()}" /> ! </h1>
-		<h2><a href="user?action=show">Profile</a></h2>
+		<h1> Dashboard </h1>
+		<h2> Welcome <c:out value="${currentUser.getName()}" /> ! </h1>
+		<h3><a href="user?action=show">Profile</a></h2>
 		<table>
 			<thead>
 				<tr>
@@ -34,12 +35,11 @@
 			<br/>
 			Add a new user : 
 			<br/>
-			<form method="post" action="users">
-				<div>Name : <input type="text" name="name" /></div>
-				<div>E-mail : <input type="text" name="email" /></div>
-				<div>Password : <input type="password" name="password" /></div>
+			<form method="post" action="user">
+				<div>Name : <input required type="text" name="name" /></div>
+				<div>E-mail : <input required type="text" name="email" /></div>
 				<div>Type : 
-					<select name="type">
+					<select required name="type">
 						<option value="administrator">Administrator</option>
 						<option value="intern">Intern</option>
 					</select>

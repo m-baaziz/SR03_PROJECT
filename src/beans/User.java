@@ -1,5 +1,6 @@
 package beans;
 
+import java.security.SecureRandom;
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -13,6 +14,16 @@ public class User {
 	private String company;
 	private String phone;
 	private boolean isActive;
+	
+	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	static SecureRandom rnd = new SecureRandom();
+
+	protected String randomString(int len){
+	   StringBuilder sb = new StringBuilder( len );
+	   for( int i = 0; i < len; i++ ) 
+	      sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
+	   return sb.toString();
+	}
 	
 	public User() {
 		this.creationDate = new Date(Calendar.getInstance().getTime().getTime());
@@ -33,6 +44,17 @@ public class User {
 		}
 	}
 	public User(String email, String password, String type, String name) throws Exception {
+		if (this.setEmail(email) && this.setPassword(password) && this.setType(type) && this.setName(name)) {
+			this.setCompany("");
+			this.setPhone("");
+			this.creationDate = new Date(Calendar.getInstance().getTime().getTime());
+			this.activate();
+		} else {
+			throw new Exception("Invalid parameters");
+		}
+	}
+	public User(String email, String type, String name) throws Exception {
+		String password = randomString(10);
 		if (this.setEmail(email) && this.setPassword(password) && this.setType(type) && this.setName(name)) {
 			this.setCompany("");
 			this.setPhone("");
