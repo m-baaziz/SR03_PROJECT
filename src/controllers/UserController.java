@@ -86,18 +86,12 @@ public class UserController extends HttpServlet {
 			if (request.getParameter("email") != null && !request.getParameter("email").isEmpty()) {
 				User user = new User(request.getParameter("email"), request.getParameter("type"), request.getParameter("name"));
 				if (dao.addUser(user)) {
-					Session session = Mailer.getSession();
-					Message message = new MimeMessage(session);
-					message.setFrom(new InternetAddress("sr03project@outlook.com"));
-					message.setRecipients(Message.RecipientType.TO,
-						InternetAddress.parse(request.getParameter("email")));
-					message.setSubject("SR03 password information");
-					message.setText("Dear " + request.getParameter("name") + ","
-						+ "\n\n " + "Here is your account credentials : \n\n"
-								+ "   email : " + user.getEmail() + "\n"
-								+ "   password : " + user.getPassword());
-
-					Transport.send(message);
+					String body = "Dear " + request.getParameter("name") + ","
+									+ "\n\n " + "A new sr03-project account has been created for your, "
+									+ "here is your account credentials : \n\n"
+									+ "   email : " + user.getEmail() + "\n"
+									+ "   password : " + user.getPassword();
+					Mailer.sendEmail(request.getParameter("email"), "SR03-project credentials", body);
 				}
 			}
 		} catch (Exception e) {
