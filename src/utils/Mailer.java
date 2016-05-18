@@ -2,6 +2,9 @@ package utils;
 
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
@@ -35,6 +38,7 @@ public class Mailer {
 	
 	public static void sendEmail(String to, String subject, String body) {
 		try {
+			ExecutorService executor = Executors.newFixedThreadPool(1);
 			Session session = Mailer.getSession();
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("sr03project@outlook.com"));
@@ -42,8 +46,18 @@ public class Mailer {
 				InternetAddress.parse(to));
 			message.setSubject(subject);
 			message.setText(body);
-
-			Transport.send(message);
+			executor.submit(new Callable<Boolean>() {
+				public Boolean call() {
+					try {
+						Transport.send(message);
+						System.out.println("email sent to " + to);
+						return true;
+					} catch (Exception e) {
+						e.printStackTrace();
+						return false;
+					}
+				}
+			});
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -20,6 +20,7 @@
 				<tr>
 					<th>Email</th>
 					<th>Password</th>
+					<th>Type</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,6 +28,7 @@
 					<tr>
 						<td><c:out value="${user.getEmail()}" /></td>
 						<td><c:out value="${user.getPassword()}" /></td>
+						<td><c:out value="${user.getType()}" /></td>
 					</tr>
 				</c:forEach>
 			</tbody>
