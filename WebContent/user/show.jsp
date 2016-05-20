@@ -14,7 +14,7 @@
 	<body>
 		<h1> <c:out value="${user.getName()}" /> profile </h1>
 		<br/>
-		<a href="user?email?=${user.getEmail()}&action=edit">Edit</a>
+		<a href="user?email=${user.getEmail()}&action=edit">Edit</a>
 		<br/>
 		<table>
 			<tbody>

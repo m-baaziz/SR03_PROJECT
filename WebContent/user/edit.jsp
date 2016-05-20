@@ -17,6 +17,7 @@
 		<br/>
 		<form action="user" method="post">
 			<input type="hidden" name="_method" value="put" />
+			<input type="hidden" name="email" value="${user.getEmail()}" />
 			<table>
 				<tbody>
 					<tr><td>Name : </td><td><input name="name" type="text" value="${user.getName()}" /></td></tr>
@@ -41,6 +42,6 @@
 			<input type="submit" value="Edit" />
 		</form>
 		<br/>
-		<a href="user?action=show">Return</a>
+		<a href="user?email=${user.getEmail()}&action=show">Return</a>
 	</body>
 </html>

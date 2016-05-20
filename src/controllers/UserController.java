@@ -89,19 +89,23 @@ public class UserController extends HttpServlet {
 			//  ------ PUT METHODS -------------
 			
 			if (request.getParameter("_method") != null && request.getParameter("_method").equals("put")) {
-				User currentUser = (User) request.getSession().getAttribute("currentUser");
-				currentUser.setName(request.getParameter("name"));
-				currentUser.setType(request.getParameter("type"));
-				currentUser.setCompany(request.getParameter("company"));
-				currentUser.setPhone(request.getParameter("phone"));
+				User user = (User) dao.getUserByEmail(request.getParameter("email"));
+				user.setName(request.getParameter("name"));
+				user.setType(request.getParameter("type"));
+				user.setCompany(request.getParameter("company"));
+				user.setPhone(request.getParameter("phone"));
 				boolean isActive = Boolean.valueOf(request.getParameter("isActive"));
 				if (isActive) {
-					currentUser.activate();
+					user.activate();
 				} else {
-					currentUser.desactivate();
+					user.desactivate();
 				}
-				dao.updateUser(currentUser);
-				response.sendRedirect("user?action=show");
+				dao.updateUser(user);
+				User currentUser = (User) request.getSession().getAttribute("currentUser");
+				if (currentUser.getEmail().equals(user.getEmail())) { // if the user updated is the current user, update the session variable currentUser
+					request.getSession().setAttribute("currentUser", user);
+				}
+				response.sendRedirect("user?email=" + user.getEmail() + "action=show");
 				return;
 			}
 			
