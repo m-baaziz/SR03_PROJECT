@@ -54,18 +54,25 @@ public class UserController extends HttpServlet {
 						response.sendRedirect("index.jsp");
 						return;
 					}
+					User user = getUserToProcess(request);
 					if (request.getParameter("action").equals("show")) {
-						User userToShow = getUserToProcess(request);
 						view = request.getRequestDispatcher("user/show.jsp");
-						request.setAttribute("user", userToShow);
+						request.setAttribute("user", user);
 						view.forward(request, response);
 						return;
 					}
 					if (request.getParameter("action").equals("edit")) {
-						User userToShow = getUserToProcess(request);
 						view = request.getRequestDispatcher("user/edit.jsp");
-						request.setAttribute("user", userToShow);
+						request.setAttribute("user", user);
 						view.forward(request, response);
+						return;
+					}
+					if (request.getParameter("action").equals("delete")) {
+						User currentUser = (User) request.getSession().getAttribute("currentUser");
+						if (currentUser.isAdmin() && !currentUser.getEmail().equals(user.getEmail())) {
+							dao.deleteUser(user.getEmail());
+						}
+						response.sendRedirect("user");
 						return;
 					}
 				} catch (Exception e) {

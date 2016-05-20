@@ -101,4 +101,17 @@ public class UserDao {
 		}
 		return users;
 	}
+	
+	public boolean deleteUser(String email) {
+		try {
+			String sqlQuery = "DELETE FROM user WHERE email=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+			preparedStatement.setString(1, email);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

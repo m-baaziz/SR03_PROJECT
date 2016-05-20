@@ -16,22 +16,26 @@
 		<h2> Welcome <c:out value="${currentUser.getName()}" /> ! </h1>
 		<h3><a href="user?action=show">Profile</a></h2>
 
-		<c:if test="${sessionScope.currentUser.isAdmin()}">
+		<c:if test="${currentUser.isAdmin()}">
 			<table>
 				<thead>
 					<tr>
 						<th>Name</th>
 						<th>Email</th>
 						<th>Type</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${users}" var="user">
-						<tr>
-							<td><a href="user?email=${user.getEmail()}&action=show"><c:out value="${user.getName()}" /></a></td>
-							<td><c:out value="${user.getEmail()}" /></td>
-							<td><c:out value="${user.getType()}" /></td>
-						</tr>
+						<c:if test="${!user.getEmail().equals(currentUser.getEmail())}">
+							<tr>
+								<td><c:out value="${user.getName()}" /></td>
+								<td><c:out value="${user.getEmail()}" /></td>
+								<td><c:out value="${user.getType()}" /></td>
+								<td><a href="user?email=${user.getEmail()}&action=show"> Show</a><a href="user?email=${user.getEmail()}&action=delete"> Remove</a></td>
+							</tr>
+						</c:if>
 					</c:forEach>
 				</tbody>
 			</table>
