@@ -21,22 +21,26 @@
 			<table>
 				<tbody>
 					<tr><td>Name : </td><td><input name="name" type="text" value="${user.getName()}" /></td></tr>
-					<tr><td>Type : </td>
-					<td>
-						<select name="type" value="${user.getType()}">
-							<option ${user.getType() == 'administrator' ? 'selected' : ''} value="administrator">Administrator</option>
-							<option ${user.getType() == 'intern' ? 'selected' : ''} value="intern">Intern</option>
-						</select>
-					</td></tr>                     
+					<c:if test="${sessionScope.currentUser.isAdmin()}">
+						<tr><td>Type : </td>
+						<td>
+							<select name="type" value="${user.getType()}">
+								<option ${user.getType() == 'administrator' ? 'selected' : ''} value="administrator">Administrator</option>
+								<option ${user.getType() == 'intern' ? 'selected' : ''} value="intern">Intern</option>
+							</select>
+						</td></tr>  
+					</c:if>                   
 					<tr><td>Company : </td><td><input name="company" type="text" value="${user.getCompany()}" /></td></tr>               
-					<tr><td>Phone : </td><td><input name="phone" type="text" value="${user.getPhone()}" /></td></tr>                   
-					<tr><td>Active : </td>
-					<td>
-						<select name="isActive">
-							<option ${user.isActive() ? 'selected' : ''} value="true">True</option>
-							<option ${user.isActive() ? '' : 'selected'}  value="false">False</option>
-						</select>
-					</td></tr>
+					<tr><td>Phone : </td><td><input name="phone" type="text" value="${user.getPhone()}" /></td></tr>
+					<c:if test="${sessionScope.currentUser.isAdmin()}">
+						<tr><td>Active : </td>
+						<td>
+							<select name="isActive">
+								<option ${user.isActive() ? 'selected' : ''} value="true">True</option>
+								<option ${user.isActive() ? '' : 'selected'}  value="false">False</option>
+							</select>
+						</td></tr>
+					</c:if>					                   
 				</tbody>
 			</table>
 			<input type="submit" value="Edit" />

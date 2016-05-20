@@ -72,6 +72,11 @@ public class UserDao {
 				user.setName(rs.getString("name"));
 				user.setCompany(rs.getString("company"));
 				user.setPhone(rs.getString("phone"));
+				if (rs.getBoolean("isActive")) {
+					user.activate();
+				} else {
+					user.desactivate();
+				}
 			}
 		} catch(Exception e) {
 			System.out.println("dans catch");

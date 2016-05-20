@@ -34,8 +34,12 @@ public class AuthenticationController extends HttpServlet {
 		try {
 			User currentUser = dao.getUserByEmail(email);
 			if (currentUser != null && !password.isEmpty() && currentUser.matchPassword(password)) {
-				HttpSession session = request.getSession(true);
-				session.setAttribute("currentUser", currentUser);
+				if (currentUser.isActive()) {
+					HttpSession session = request.getSession(true);
+					session.setAttribute("currentUser", currentUser);
+				} else {
+					errors.add("User is not active, please ask an admin (sr03project@outlook.com) to activate your account");
+				}
 			} else {
 				errors.add("Invalid credentials");
 			}
