@@ -29,6 +29,17 @@ public class UserController extends HttpServlet {
 		dao = new UserDao();
 	}
 	
+	private User getUserToProcess(HttpServletRequest request) throws Exception {
+		User userToShow = (User) request.getSession().getAttribute("currentUser");
+		if (request.getParameter("email") != null  && !request.getParameter("email").isEmpty()) {
+			if (!userToShow.isAdmin() && !userToShow.getEmail().equals(request.getParameter("email"))) {
+				throw new Exception("access forbiden");
+			}
+			userToShow = dao.getUserByEmail(request.getParameter("email"));
+		}
+		return userToShow;
+	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = request.getRequestDispatcher("user/index.jsp");
 		if (request.getSession().getAttribute("currentUser") == null) {
@@ -37,19 +48,29 @@ public class UserController extends HttpServlet {
 		}
 		try {
 			if (request.getParameter("action") != null) {
-				if (request.getParameter("action").equals("logout")) {
-					request.getSession().removeAttribute("currentUser");
-					response.sendRedirect("index.jsp");
-					return;
-				}
-				if (request.getParameter("action").equals("show")) {
-					view = request.getRequestDispatcher("user/show.jsp");
-					view.forward(request, response);
-					return;
-				}
-				if (request.getParameter("action").equals("edit")) {
-					view = request.getRequestDispatcher("user/edit.jsp");
-					view.forward(request, response);
+				try{
+					if (request.getParameter("action").equals("logout")) {
+						request.getSession().removeAttribute("currentUser");
+						response.sendRedirect("index.jsp");
+						return;
+					}
+					if (request.getParameter("action").equals("show")) {
+						User userToShow = getUserToProcess(request);
+						view = request.getRequestDispatcher("user/show.jsp");
+						request.setAttribute("user", userToShow);
+						view.forward(request, response);
+						return;
+					}
+					if (request.getParameter("action").equals("edit")) {
+						User userToShow = getUserToProcess(request);
+						view = request.getRequestDispatcher("user/edit.jsp");
+						request.setAttribute("user", userToShow);
+						view.forward(request, response);
+						return;
+					}
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+					response.sendRedirect("user");
 					return;
 				}
 			}
@@ -57,6 +78,8 @@ public class UserController extends HttpServlet {
 			view.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
+			response.sendRedirect("index.jsp");
+			return;
 		}
 	}
 	

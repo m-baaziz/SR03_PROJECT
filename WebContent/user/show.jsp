@@ -12,19 +12,19 @@
 		<title> SR03 Project Website </title>
 	</head>
 	<body>
-		<h1> <c:out value="${currentUser.getName()}" /> profile </h1>
+		<h1> <c:out value="${user.getName()}" /> profile </h1>
 		<br/>
-		<a href="user?action=edit">Edit</a>
+		<a href="user?email?=${user.getEmail()}&action=edit">Edit</a>
 		<br/>
 		<table>
 			<tbody>
-				<tr><td>Name : </td><td><c:out value="${currentUser.getName()}" /></td></tr>
-				<tr><td>Email : </td><td><c:out value="${currentUser.getEmail()}" /></td></tr>                   
-				<tr><td>Type : </td><td><c:out value="${currentUser.getType()}" /></td></tr>                     
-				<tr><td>Creation Date : </td><td><c:out value="${currentUser.getCreationDate()}" /></td></tr>    
-				<tr><td>Company : </td><td><c:out value="${currentUser.getCompany()}" /></td></tr>               
-				<tr><td>Phone : </td><td><c:out value="${currentUser.getPhone()}" /></td></tr>                   
-				<tr><td>Active : </td><td><c:out value="${currentUser.isActive() ? 'True': 'False'}" /></td></tr>
+				<tr><td>Name : </td><td><c:out value="${user.getName()}" /></td></tr>
+				<tr><td>Email : </td><td><c:out value="${user.getEmail()}" /></td></tr>                   
+				<tr><td>Type : </td><td><c:out value="${user.getType()}" /></td></tr>                     
+				<tr><td>Creation Date : </td><td><c:out value="${user.getCreationDate()}" /></td></tr>    
+				<tr><td>Company : </td><td><c:out value="${user.getCompany()}" /></td></tr>               
+				<tr><td>Phone : </td><td><c:out value="${user.getPhone()}" /></td></tr>                   
+				<tr><td>Active : </td><td><c:out value="${user.isActive() ? 'True': 'False'}" /></td></tr>
 			</tbody>
 		</table>
 		<br/>

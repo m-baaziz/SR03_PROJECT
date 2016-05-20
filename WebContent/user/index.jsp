@@ -15,26 +15,29 @@
 		<h1> Dashboard </h1>
 		<h2> Welcome <c:out value="${currentUser.getName()}" /> ! </h1>
 		<h3><a href="user?action=show">Profile</a></h2>
-		<table>
-			<thead>
-				<tr>
-					<th>Email</th>
-					<th>Password</th>
-					<th>Type</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${users}" var="user">
-					<tr>
-						<td><c:out value="${user.getEmail()}" /></td>
-						<td><c:out value="${user.getPassword()}" /></td>
-						<td><c:out value="${user.getType()}" /></td>
-					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+
 		<c:if test="${sessionScope.currentUser.isAdmin()}">
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Type</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${users}" var="user">
+						<tr>
+							<td><a href="user?email=${user.getEmail()}&action=show"><c:out value="${user.getName()}" /></a></td>
+							<td><c:out value="${user.getEmail()}" /></td>
+							<td><c:out value="${user.getType()}" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			
 			<br/>
+			
 			Add a new user : 
 			<br/>
 			<form method="post" action="user">
