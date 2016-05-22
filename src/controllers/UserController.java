@@ -42,7 +42,8 @@ public class UserController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = request.getRequestDispatcher("user/index.jsp");
-		if (request.getSession().getAttribute("currentUser") == null) {
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
+		if (currentUser == null) {
 			response.sendRedirect("index.jsp");
 			return;
 		}
@@ -68,7 +69,6 @@ public class UserController extends HttpServlet {
 						return;
 					}
 					if (request.getParameter("action").equals("delete")) {
-						User currentUser = (User) request.getSession().getAttribute("currentUser");
 						if (currentUser.isAdmin() && !currentUser.getEmail().equals(user.getEmail())) {
 							dao.deleteUser(user.getEmail());
 						}
@@ -81,7 +81,17 @@ public class UserController extends HttpServlet {
 					return;
 				}
 			}
-			request.setAttribute("users", dao.getAllUsers());
+			int page = 1;
+			if (request.getParameter("page") != null) {
+				try {
+					page = Integer.parseInt(request.getParameter("page"));
+				} catch (Exception e) {
+					page = 1;
+				}
+			}
+			UserDao.Pagination pagination = dao.getAllUsers(page, currentUser.getEmail());
+			request.setAttribute("pageCount", pagination.pageCount);
+			request.setAttribute("users", pagination.users);
 			view.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,8 +142,6 @@ public class UserController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		request.setAttribute("users", dao.getAllUsers());
-		RequestDispatcher view = request.getRequestDispatcher("user/index.jsp");
-		view.forward(request, response);
+		response.sendRedirect("user");
 	}
 }

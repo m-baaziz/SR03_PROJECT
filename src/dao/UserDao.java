@@ -13,9 +13,37 @@ import utils.Db;
 public class UserDao {
 	
 	private Connection connection;
+	private static final int USERS_PER_PAGE = 3;
+	
+	public class Pagination {
+		public List<User> users;
+		public int pageCount;
+		
+		public Pagination() {
+			this.users = new ArrayList<User>();
+			this.pageCount = 0;
+		}
+	}
 	
 	public UserDao() {
 		connection = Db.getConnection();
+	}
+	
+	public int usersCount() {
+		try {
+			String sqlQuery = "SELECT COUNT(email) AS count FROM user";
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("count");
+			} else {
+				return -1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+		
 	}
 	
 	public boolean addUser(User user) {
@@ -79,7 +107,6 @@ public class UserDao {
 				}
 			}
 		} catch(Exception e) {
-			System.out.println("dans catch");
 			e.printStackTrace();
 		}
 		return user;
@@ -100,6 +127,32 @@ public class UserDao {
 			e.printStackTrace();
 		}
 		return users;
+	}
+	
+	public Pagination getAllUsers(int page, String userEmail) { // userEmail : user not to be shown
+		Pagination pagination = new Pagination();
+		try {
+			String sqlQuery = "SELECT * FROM user WHERE NOT email=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+			preparedStatement.setString(1, userEmail);
+			ResultSet rs = preparedStatement.executeQuery();
+			int index = 0;
+			pagination.pageCount = (int) Math.ceil(((double) this.usersCount() - 1)/USERS_PER_PAGE);
+			if (page < 1 || page > pagination.pageCount) {page = 1;}
+			int startIndex = USERS_PER_PAGE*(page - 1);
+			int lastIndex = USERS_PER_PAGE*(page) - 1;
+			while (rs.next() && index <= lastIndex) {
+				if (index >= startIndex && index <= lastIndex) {
+					User tmp = new User(rs.getString("email"), rs.getString("password"), rs.getString("type"), 
+							rs.getDate("creationDate"), rs.getString("name"), rs.getString("company"), rs.getString("phone"));
+					pagination.users.add(tmp);
+				}
+				index++;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return pagination;
 	}
 	
 	public boolean deleteUser(String email) {

@@ -39,7 +39,9 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			
+			<c:forEach var="i" begin="1" end="${pageCount}">
+				<a href="user?page=${i}"><c:out value="${i}" /></a>
+			</c:forEach>
 			<br/>
 			
 			Add a new user : 
