@@ -12,12 +12,12 @@
 		<title> SR03 Project Website </title>
 	</head>
 	<body>
-		<h1> Edit test:   </h1>
+		<h1> Edit test: <c:out value="${test.getSubject()}" />  </h1>
 		<br/>
 		<br/>
 		<c:if test="${sessionScope.currentUser.isAdmin()}">			
 			<form method="post" action="user">
-				<div>Subject : <input required type="text" name="subject" /></div>							
+				<div>Subject : <input required type="text" name="subject" value="" /></div>							
 				<h3>Questions: </h3>		
 				<table>
 					<thead>

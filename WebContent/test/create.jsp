@@ -16,8 +16,8 @@
 		<br/>
 		<br/>
 		<c:if test="${sessionScope.currentUser.isAdmin()}">			
-			<form method="post" action="user">
-				<div>Subject : <input required type="text" name="subject" /></div>							
+			<form method="post" action="test">
+				<div>Subject : <input required type="text" name="subject"/></div>							
 				<h3>Questions: </h3>		
 				<table>
 					<thead>

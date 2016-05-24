@@ -16,8 +16,20 @@
 		<br/>
 		<br/>
 		<c:if test="${sessionScope.currentUser.isAdmin()}">			
-			<form method="post" action="user">				
+			<form method="post" action="answer">				
 				<div>Answer : <input required type="text" name="Anwser" /></div>
+				<div>Is true :
+					<select name="isTrue">
+						<option ${currentQuestion.isTrue() ? 'selected' : ''} value="true">True</option>
+						<option ${currentQuestion.isTrue() ? '' : 'selected'}  value="false">False</option>
+					</select>
+				</div>
+				<div>Active:
+					<select name="isActive">
+						<option ${currentQuestion.isActive() ? 'selected' : ''} value="true">True</option>
+						<option ${currentQuestion.isActive() ? '' : 'selected'}  value="false">False</option>
+					</select>
+				</div>
 				<div><input type="submit" value="Send" /></div>
 			</form>
 		</c:if>

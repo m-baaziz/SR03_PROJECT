@@ -20,7 +20,6 @@
 			<table>
 				<tbody>
 					<tr><td>Entitled: </td><td><input name="name" type="text" value="${currentQuestion.getQuestionText()}" /></td></tr>					           
-					<tr><td>Subject : </td><td><input name="company" type="text" value="${currentQuestion.getSubject()}" /></td></tr>               					        
 					<tr><td>Active : </td>
 					<td>
 						<select name="isActive">
@@ -30,6 +29,25 @@
 					</td></tr>
 				</tbody>
 			</table>
+			<table>
+				<thead>
+					<tr>					
+						<th>Answer</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${answer}" var="question">
+						<tr>
+							<td><c:out value="${answer.getAnswerText()}" /></td>
+							<td><a href="answer?action=edit">Edit</a></td>
+							<td><a href="answer?action=delete">Delete</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>	
+			<a href="answer?action=create">Add an answer</a>
 			<input type="submit" value="Edit" />
 		</form>
 		<br/>

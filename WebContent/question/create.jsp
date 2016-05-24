@@ -19,7 +19,24 @@
 			<form method="post" action="user">
 				<div>Entitled : <input required type="text" name="questionText" /></div>
 				<div>Subject : <input required type="text" name="subject" /></div>
-				<div>Answer : <input required type="text" name="Anwser" /></div>
+				<table>
+					<thead>
+						<tr>					
+							<th>Answer</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${answer}" var="question">
+							<tr>
+								<td><c:out value="${answer.getAnswerText()}" /></td>
+								<td><a href="answer?action=edit">Edit</a></td>
+								<td><a href="answer?action=delete">Delete</a></td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 				<div><input type="submit" value="Send" /></div>
 			</form>
 		</c:if>
