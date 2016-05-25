@@ -66,7 +66,10 @@ public class TestController extends HttpServlet {
 				dao.updateTest(currentTest);
 				response.sendRedirect("test?action=show");
 				return;
-			}			
+			}
+			if (request.getParameter("subject") != null && !request.getParameter("subject").isEmpty()) {
+				// create test and redirect to the show of this test where the user can add questions
+			}
 		}catch (Exception e){
 			e.printStackTrace();
 		}
