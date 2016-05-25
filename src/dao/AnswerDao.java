@@ -84,7 +84,7 @@ public class AnswerDao {
 	}
 	
 	public List<Answer> getAllAnswersByQuestion(int questionId){
-		Answer answer = new Answer();
+		List<Answer> answers = new ArrayList<Answer>();
 		try{
 			String sqlQuery = "SELECT * FROM Answer WHERE questionId = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -92,7 +92,7 @@ public class AnswerDao {
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Answer tmp = new Answer(rs.getString("subject"));
-				answer.add(tmp);
+				answers.add(tmp);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -100,11 +100,11 @@ public class AnswerDao {
 		return answers;	
 	}
 	
-	public deleteAnswer(int answerId){
+	public boolean deleteAnswer(int answerId) {
 		try {
 			String sqlQuery = "DELETE FROM answer WHERE answerid=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-			preparedStatement.setString(1, answerId);
+			preparedStatement.setInt(1, answerId);
 			preparedStatement.executeUpdate();
 			return true;
 		} catch(SQLException e) {

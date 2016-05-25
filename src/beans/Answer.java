@@ -15,6 +15,14 @@ public class Answer {
 		this.activate();		
 	}
 	
+	public Answer(String text){
+		this.setAnswerId(0);
+		this.setQuestionId(0);
+		this.setAnswerText(text);
+		this.setAnswerTrue();
+		this.activate();		
+	}
+	
 	public Answer(int answerId, int questionId, String answerText, boolean answerIsTrue) throws Exception {
 		if (this.setAnswerId(answerId) && this.setQuestionId(questionId) && this.setAnswerText(answerText) && this.setAnswerTrue()){
 			this.activate();
@@ -73,7 +81,7 @@ public class Answer {
 		return true;	
 	}
 	
-	public boolean deactivate(){
+	public boolean desactivate(){
 		this.isActive = false;
 		return true;
 	}
