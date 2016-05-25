@@ -83,5 +83,33 @@ public class AnswerDao {
 		return answer;
 	}
 	
-
+	public List<Answer> getAllAnswersByQuestion(int questionId){
+		Answer answer = new Answer();
+		try{
+			String sqlQuery = "SELECT * FROM Answer WHERE questionId = ?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+			preparedStatement.setInt(questionId);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				Answer tmp = new Answer(rs.getString("subject"));
+				answer.add(tmp);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return answers;	
+	}
+	
+	public deleteAnswer(int answerId){
+		try {
+			String sqlQuery = "DELETE FROM answer WHERE answerid=?";
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+			preparedStatement.setString(1, answerId);
+			preparedStatement.executeUpdate();
+			return true;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
