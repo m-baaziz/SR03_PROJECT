@@ -18,26 +18,6 @@
 		<c:if test="${sessionScope.currentUser.isAdmin()}">			
 			<form method="post" action="test">
 				<div>Subject : <input required type="text" name="subject"/></div>							
-				<h3>Questions: </h3>		
-				<table>
-					<thead>
-						<tr>					
-							<th>Entitled</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${questions}" var="question">
-							<tr>
-								<td><c:out value="${question.getQuestionText()}" /></td>
-								<td><a href="question?action=edit">Edit</a></td>
-								<td><a href="question?action=delete">Delete</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>	
-				<a href="question?action=create">Add a question</a>
 				<div><input type="submit" value="Send" /></div>
 			</form>
 		</c:if>
