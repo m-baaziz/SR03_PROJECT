@@ -25,12 +25,28 @@
 		<servlet-name>AuthenticationController</servlet-name>
 		<url-pattern>/authentication</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
 	  <servlet-name>TestController</servlet-name>
 	  <servlet-class>controllers.TestController</servlet-class>
   </servlet>
   <servlet-mapping>
 		<servlet-name>TestController</servlet-name>
 		<url-pattern>/test</url-pattern>
+  </servlet-mapping>
+  <servlet>
+	  <servlet-name>QuestionController</servlet-name>
+	  <servlet-class>controllers.QuestionController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+		<servlet-name>QuestionController</servlet-name>
+		<url-pattern>/question</url-pattern>
+  </servlet-mapping>
+  <servlet>
+	  <servlet-name>AnswerController</servlet-name>
+	  <servlet-class>controllers.AnswerController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+		<servlet-name>AnswerController</servlet-name>
+		<url-pattern>/answer</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Test;
+import beans.User;
 import dao.TestDao;
 
 public class TestController extends HttpServlet {
@@ -20,19 +21,27 @@ public class TestController extends HttpServlet {
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = request.getRequestDispatcher("test/list.jsp");
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
+		if (currentUser == null) {
+			response.sendRedirect("index.jsp");
+			return;
+		}
 		try {
 			if (request.getParameter("action") != null){
 				if (request.getParameter("action").equals("create")){
 					view = request.getRequestDispatcher("test/create.jsp");
 					view.forward(request, response);
+					return;
 				}
 				if (request.getParameter("action").equals("edit")){
 					view = request.getRequestDispatcher("test/edit.jsp");
 					view.forward(request, response);
+					return;
 				}
 				if (request.getParameter("action").equals("show")){
 					view = request.getRequestDispatcher("test/show.jsp");
 					view.forward(request, response);
+					return;
 				}
 			}
 			request.setAttribute("tests", dao.getAllTests());

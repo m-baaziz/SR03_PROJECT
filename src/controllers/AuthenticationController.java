@@ -24,6 +24,11 @@ public class AuthenticationController extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
+		if (currentUser != null) {
+			response.sendRedirect("user");
+			return;
+		}
 		request.getRequestDispatcher("authentication/index.jsp").forward(request, response);
 	}
 	

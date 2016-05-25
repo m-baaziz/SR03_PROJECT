@@ -102,7 +102,6 @@ public class UserController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
 			//  ------ PUT METHODS -------------
 			User currentUser = (User) request.getSession().getAttribute("currentUser");
 			if (request.getParameter("_method") != null && request.getParameter("_method").equals("put")) {

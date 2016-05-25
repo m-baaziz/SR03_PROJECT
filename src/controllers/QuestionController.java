@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.Question;
+import beans.User;
 import dao.QuestionDao;
 
 public class QuestionController extends HttpServlet {
@@ -23,19 +24,27 @@ public class QuestionController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher view = request.getRequestDispatcher("question/list.jsp");
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
+		if (currentUser == null) {
+			response.sendRedirect("index.jsp");
+			return;
+		}
 		try {
 			if (request.getParameter("action") != null){
 				if (request.getParameter("action").equals("create")){
-					view = request.getRequestDispatcher("question/create.js");
+					view = request.getRequestDispatcher("question/create.jsp");
 					view.forward(request, response);
+					return;
 				}
 				if (request.getParameter("action").equals("edit")){
-					view = request.getRequestDispatcher("question/edit.js");
+					view = request.getRequestDispatcher("question/edit.jsp");
 					view.forward(request, response);
+					return;
 				}
 				if (request.getParameter("action").equals("show")){
-					view = request.getRequestDispatcher("question/show.js");
+					view = request.getRequestDispatcher("question/show.jsp");
 					view.forward(request, response);
+					return;
 				}
 			}
 			request.setAttribute("questions", dao.getAllQuestions());
