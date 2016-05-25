@@ -38,7 +38,7 @@ public class AnswerDao {
 	
 	public boolean updateAnswer(Answer answer){
 		try{
-			String sqlQuery = "UPDATE Answer SET answerText = ?, isActive = ?, isTrue = ? "+"WHERE answerId = ?";
+			String sqlQuery = "UPDATE answer SET answerText = ?, isActive = ?, isTrue = ? "+"WHERE answerId = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);		
 			preparedStatement.setString(1, answer.getAnswerText());
 			preparedStatement.setBoolean(2, answer.isActive());
@@ -54,7 +54,7 @@ public class AnswerDao {
 	
 	public boolean deleteAnswer(Answer answer){
 		try{
-			String sqlQuery = "DELETE FROM Answer" + "WHERE answerId = ?";
+			String sqlQuery = "DELETE FROM answer" + "WHERE answerId = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, answer.getAnswerId());
 			preparedStatement.executeQuery();
@@ -69,7 +69,7 @@ public class AnswerDao {
 	public Answer getAnswerById(int answerId) {
 		Answer answer = new Answer();
 		try {
-			String sqlQuery = "SELECT * FROM Answer WHERE id=?";
+			String sqlQuery = "SELECT * FROM answer WHERE id=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, answerId);
 			ResultSet rs = preparedStatement.executeQuery();
@@ -86,7 +86,7 @@ public class AnswerDao {
 	public List<Answer> getAllAnswersByQuestion(int questionId){
 		List<Answer> answers = new ArrayList<Answer>();
 		try{
-			String sqlQuery = "SELECT * FROM Answer WHERE questionId = ?";
+			String sqlQuery = "SELECT * FROM answer WHERE questionId = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, questionId);
 			ResultSet rs = preparedStatement.executeQuery();

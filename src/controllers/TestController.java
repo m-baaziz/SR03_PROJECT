@@ -1,17 +1,17 @@
 package controllers;
 
+import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.Question;
 import beans.Test;
-import dao.QuestionDao;
 import dao.TestDao;
 
-public class TestController {
+public class TestController extends HttpServlet {
 	private TestDao dao;
 	
 	public TestController(){
@@ -23,15 +23,15 @@ public class TestController {
 		try {
 			if (request.getParameter("action") != null){
 				if (request.getParameter("action").equals("create")){
-					view = request.getRequestDispatcher("test/create.js");
+					view = request.getRequestDispatcher("test/create.jsp");
 					view.forward(request, response);
 				}
 				if (request.getParameter("action").equals("edit")){
-					view = request.getRequestDispatcher("test/edit.js");
+					view = request.getRequestDispatcher("test/edit.jsp");
 					view.forward(request, response);
 				}
 				if (request.getParameter("action").equals("show")){
-					view = request.getRequestDispatcher("test/show.js");
+					view = request.getRequestDispatcher("test/show.jsp");
 					view.forward(request, response);
 				}
 			}
@@ -46,7 +46,7 @@ public class TestController {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
 			if (request.getParameter("_method") != null && request.getParameter("_method").equals("put")){
-				Test currentTest = (Test) request.getSession().getAttribut("currentTest");			
+				Test currentTest = (Test) request.getSession().getAttribute("currentTest");			
 				currentTest.setSubject(request.getParameter("subject"));
 				boolean isActive = Boolean.valueOf(request.getParameter("isActive"));
 				if (isActive) {

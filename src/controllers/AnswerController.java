@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +12,7 @@ import beans.Answer;
 import dao.AnswerDao;
 
 
-public class AnswerController {
+public class AnswerController extends HttpServlet {
 	private AnswerDao dao;
 	
 	public AnswerController(){

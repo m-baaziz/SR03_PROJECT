@@ -54,7 +54,7 @@ public class QuestionDao {
 	
 	public boolean deleteQuestion(Question question){
 		try{
-			String sqlQuery = "DELETE FROM Question" + "WHERE questionId = ?";
+			String sqlQuery = "DELETE FROM question" + "WHERE questionId = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1,question.getQuestionId());
 			ResultSet rs = preparedStatement.executeQuery();
@@ -69,7 +69,7 @@ public class QuestionDao {
 	public Question getQuestionById(int questionId) {
 		Question question = new Question();
 		try {
-			String sqlQuery = "SELECT * FROM Question WHERE id=?";
+			String sqlQuery = "SELECT * FROM question WHERE id=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1,question.getQuestionId());
 			ResultSet rs = preparedStatement.executeQuery();

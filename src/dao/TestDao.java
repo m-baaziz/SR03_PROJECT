@@ -81,7 +81,7 @@ public class TestDao {
 	public List<Test> getAllTests() {
 		List<Test> tests = new ArrayList<Test>();
 		try {
-			String sqlQuery = "SELECT * FROM Test";
+			String sqlQuery = "SELECT * FROM test";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
