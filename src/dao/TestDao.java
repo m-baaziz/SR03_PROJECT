@@ -62,6 +62,7 @@ public class TestDao {
 	}
 	
 	public Test getTestBySubject(String subject){
+		Test test = new Test();
 		try{
 			String sqlQuery = "SELECT * FROM test WHERE subject=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
@@ -74,7 +75,7 @@ public class TestDao {
 			System.out.println("dans catch");
 			e.printStackTrace();
 		}
-		return test
+		return test;
 	}
 	
 	public List<Test> getAllTests() {
@@ -85,7 +86,7 @@ public class TestDao {
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Test tmp = new Test(rs.getString("subject"));
-				test.add(tmp);
+				tests.add(tmp);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
