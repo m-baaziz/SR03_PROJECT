@@ -14,7 +14,7 @@ import beans.Answer;
 public class AnswerDao {
 	private Connection connection;
 	
-	public AnswerDao {
+	public AnswerDao() {
 		connection = Db.getConnection();
 	}
 	
@@ -26,7 +26,7 @@ public class AnswerDao {
 			preparedStatement.setInt(1, answer.getAnswerId());
 			preparedStatement.setInt(2, answer.getQuestionId());		
 			preparedStatement.setString(3, answer.getAnswerText());
-			preparedStatement.setBoolean(5, answer.answerTrue());
+			preparedStatement.setBoolean(5, answer.setAnswerTrue());
 			preparedStatement.setBoolean(5, answer.isTrue());
 			preparedStatement.executeUpdate();
 			return true;
@@ -41,7 +41,7 @@ public class AnswerDao {
 			String sqlQuery = "UPDATE Answer SET answerText = ?, isActive = ?, isTrue = ? "+"WHERE answerId = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);		
 			preparedStatement.setString(1, answer.getAnswerText());
-			preparedStatement.setBoolean(2, answer.active());
+			preparedStatement.setBoolean(2, answer.isActive());
 			preparedStatement.setBoolean(3, answer.isTrue());
 			preparedStatement.setInt(4, answer.getAnswerId());
 			preparedStatement.executeUpdate();
@@ -56,8 +56,8 @@ public class AnswerDao {
 		try{
 			String sqlQuery = "DELETE FROM Answer" + "WHERE answerId = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-			preparedStatement.setInt("answerId");
-			ResultSet rs = preparedStatement.executeQuery();
+			preparedStatement.setInt(1, answer.getAnswerId());
+			preparedStatement.executeQuery();
 			return true;
 		}catch(Exception e) {
 			System.out.println("dans catch");
@@ -71,10 +71,10 @@ public class AnswerDao {
 		try {
 			String sqlQuery = "SELECT * FROM Answer WHERE id=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-			preparedStatement.setInt(answerId);
+			preparedStatement.setInt(1, answerId);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-				answer.setQuestionText(rs.getString("answerText"));			
+				answer.setAnswerText(rs.getString("answerText"));			
 			}
 		} catch(Exception e) {
 			System.out.println("dans catch");
