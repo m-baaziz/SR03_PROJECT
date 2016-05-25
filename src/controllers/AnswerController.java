@@ -1,12 +1,12 @@
 package controllers;
 
+import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import beans.Answer;
 import beans.Question;
 import dao.AnswerDao;
 
@@ -46,7 +46,7 @@ public class AnswerController {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
 			if (request.getParameter("_method") != null && request.getParameter("_method").equals("put")){
-				Question currentAnswer= (Question) request.getSession().getAttribut("currentAnswer");
+				Question currentAnswer= (Question) request.getSession().getAttribute("currentAnswer");
 				currentAnswer.setQuestionText(request.getParameter("questionText"));
 				currentAnswer.setSubject(request.getParameter("subject"));
 				boolean isActive = Boolean.valueOf(request.getParameter("isActive"));
