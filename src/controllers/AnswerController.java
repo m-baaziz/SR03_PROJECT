@@ -36,7 +36,7 @@ public class AnswerController {
 					view.forward(request, response);
 				}
 			}
-			request.setAttribute("answers", dao.getAllQuestions());
+			request.setAttribute("answers", dao.getAllAnswersByQuestion());
 			view.forward(request, response);
 			
 		}catch (Exception e){

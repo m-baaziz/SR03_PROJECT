@@ -88,7 +88,7 @@ public class AnswerDao {
 		try{
 			String sqlQuery = "SELECT * FROM Answer WHERE questionId = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-			preparedStatement.setInt(questionId);
+			preparedStatement.setInt(1, questionId);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Answer tmp = new Answer(rs.getString("subject"));
