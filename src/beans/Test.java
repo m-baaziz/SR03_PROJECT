@@ -5,11 +5,11 @@ public class Test {
 	private boolean isActive;
 	
 	public Test(){
-		this.setSubject();
+		this.setSubject("");
 		this.activate();		
 	}
 	
-	public Test(String subject){
+	public Test(String subject) throws Exception {
 		if (this.setSubject(subject)){
 			this.activate();
 		}else{
@@ -25,7 +25,7 @@ public class Test {
 		return isActive;
 	}
 	
-	public String setSubject(int subject) {
+	public boolean setSubject(String subject) {
 		this.subject = subject;
 		return true;
 	}
