@@ -10,13 +10,13 @@ public class Answer {
 	public Answer(){
 		this.setAnswerId(0);
 		this.setQuestionId(0);
-		this.setAnswerText();
-		this.answerTrue();
+		this.setAnswerText("");
+		this.setAnswerTrue();
 		this.activate();		
 	}
 	
 	public Answer(int answerId, int questionId, String answerText, boolean answerIsTrue) throws Exception {
-		if (this.setAnswerId(answerId) && this.setQuestionId(questionId) && this.setAnswerText(answerText) && this.setIsTrue(isTrue)){
+		if (this.setAnswerId(answerId) && this.setQuestionId(questionId) && this.setAnswerText(answerText) && this.setAnswerTrue()){
 			this.activate();
 		}else{
 			throw new Exception("Invalid parameter");
@@ -53,17 +53,17 @@ public class Answer {
 		return true;
 	}
 	
-	public boolean setAnswerText(){
+	public boolean setAnswerText(String answerText){
 		this.answerText = answerText;
 		return true;
 	}
 	
-	public boolean answerTrue(){
+	public boolean setAnswerTrue(){
 		this.isTrue = true;
 		return true;
 	}
 	
-	public boolean answerFalse(){
+	public boolean setAnswerFalse(){
 		this.isTrue = false;
 		return true;
 	}
