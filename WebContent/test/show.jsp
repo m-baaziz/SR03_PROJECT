@@ -12,32 +12,35 @@
 		<title> SR03 Project Website </title>
 	</head>
 	<body>
-		<h1> Edit test: <c:out value="${test.getSubject()}" />  </h1>
+		<h1>Test details</h1>
+		<a href="test?subject=${test.getSubject()}&action=edit">Edit</a>
 		<br/>
+		<table>
+			<tbody>
+				<tr><td>Subject : </td><td><c:out value="${test.getSubject()}" /></td></tr>
+				<tr><td>Active : </td><td><c:out value="${test.isActive() ? 'True': 'False'}" /></td></tr>
+			</tbody>
+		</table>			
+		Questions :
+		<br/>		
+		<table>
+			<thead>
+				<tr>					
+					<th>Entitled</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${questions}" var="question">
+					<tr>
+						<td><c:out value="${question.getQuestionText()}" /></td>
+						<td><a href="question?action=show"> Show</a> <a href="question?action=delete"> Remove</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>	
+		<a href="question?action=create">Add a question</a>
 		<br/>
-		<c:if test="${sessionScope.currentUser.isAdmin()}">			
-			<h3>Questions: </h3>		
-				<table>
-					<thead>
-						<tr>					
-							<th>Entitled</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${questions}" var="question">
-							<tr>
-								<td><c:out value="${question.getQuestionText()}" /></td>
-								<td><a href="question?action=edit">Edit</a></td>
-								<td><a href="question?action=delete">Delete</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>	
-				<a href="question?action=create">Add a question</a>
-		</c:if>		
-		<br/>
-		<a href="question">Return</a>
+		<a href="test">Back</a>
 	</body>
 </html>

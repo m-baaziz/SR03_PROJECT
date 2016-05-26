@@ -13,52 +13,10 @@
 	</head>
 	<body>
 		<h1> Dashboard </h1>
-		<h2> Welcome <c:out value="${currentUser.getName()}" /> ! </h1>
-		<h3><a href="user?action=show">Profile</a></h2>
-
+		<h2> Welcome <c:out value="${currentUser.getName()}" /> ! </h2>
+		<h3><a href="user?action=show">My profile</a></h3> <h3><a href="user?action=administrate">Users</a></h3>
+		<h3><a href="test">Tests</a></h3>
 		<c:if test="${currentUser.isAdmin()}">
-			<table>
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Email</th>
-						<th>Type</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach items="${users}" var="user">
-						<c:if test="${!user.getEmail().equals(currentUser.getEmail())}">
-							<tr>
-								<td><c:out value="${user.getName()}" /></td>
-								<td><c:out value="${user.getEmail()}" /></td>
-								<td><c:out value="${user.getType()}" /></td>
-								<td><a href="user?email=${user.getEmail()}&action=show"> Show</a><a href="user?email=${user.getEmail()}&action=delete"> Remove</a></td>
-							</tr>
-						</c:if>
-					</c:forEach>
-				</tbody>
-			</table>
-			<br/>
-			Pages : 
-			<c:forEach var="i" begin="1" end="${pageCount}">
-				<a href="user?page=${i}"><c:out value="${i}" /></a>
-			</c:forEach>
-			<br/>
-			<br/>
-			Add a new user : 
-			<br/>
-			<form method="post" action="user">
-				<div>Name : <input required type="text" name="name" /></div>
-				<div>E-mail : <input required type="text" name="email" /></div>
-				<div>Type : 
-					<select required name="type">
-						<option value="administrator">Administrator</option>
-						<option value="intern">Intern</option>
-					</select>
-				</div>
-				<div><input type="submit" value="Send" /></div>
-			</form>
 		</c:if>
 		<br/>
 		<a href="user?action=logout">Logout</a>

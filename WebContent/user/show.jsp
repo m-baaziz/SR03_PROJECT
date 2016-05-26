@@ -28,6 +28,6 @@
 			</tbody>
 		</table>
 		<br/>
-		<a href="user">Return</a>
+		<a href="user?action=administrate">Back</a>
 	</body>
 </html>

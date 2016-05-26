@@ -55,6 +55,22 @@ public class UserController extends HttpServlet {
 						response.sendRedirect("index.jsp");
 						return;
 					}
+					if (request.getParameter("action").equals("administrate") && currentUser.isAdmin()) {
+						int page = 1;
+						if (request.getParameter("page") != null) {
+							try {
+								page = Integer.parseInt(request.getParameter("page"));
+							} catch (Exception e) {
+								page = 1;
+							}
+						}
+						UserDao.Pagination pagination = dao.getAllUsers(page, currentUser.getEmail());
+						request.setAttribute("pageCount", pagination.pageCount);
+						request.setAttribute("users", pagination.users);
+						view = request.getRequestDispatcher("user/list.jsp");
+						view.forward(request, response);
+						return;
+					}
 					User user = getUserToProcess(request);
 					if (request.getParameter("action").equals("show")) {
 						view = request.getRequestDispatcher("user/show.jsp");
@@ -72,7 +88,7 @@ public class UserController extends HttpServlet {
 						if (currentUser.isAdmin() && !currentUser.getEmail().equals(user.getEmail())) {
 							dao.deleteUser(user.getEmail());
 						}
-						response.sendRedirect("user");
+						response.sendRedirect("user?action=administrate");
 						return;
 					}
 				} catch (Exception e) {
@@ -81,17 +97,6 @@ public class UserController extends HttpServlet {
 					return;
 				}
 			}
-			int page = 1;
-			if (request.getParameter("page") != null) {
-				try {
-					page = Integer.parseInt(request.getParameter("page"));
-				} catch (Exception e) {
-					page = 1;
-				}
-			}
-			UserDao.Pagination pagination = dao.getAllUsers(page, currentUser.getEmail());
-			request.setAttribute("pageCount", pagination.pageCount);
-			request.setAttribute("users", pagination.users);
 			view.forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -141,6 +146,6 @@ public class UserController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		response.sendRedirect("user");
+		response.sendRedirect("user?action=administrate");
 	}
 }

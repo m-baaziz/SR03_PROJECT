@@ -35,10 +35,10 @@ public class TestDao {
 	
 	public boolean updateTest(Test test){
 		try{
-			String sqlQuery = "UPDATE test SET subject = ?, isActive = ? "+"WHERE subject = ?";
+			String sqlQuery = "UPDATE test SET isActive = ? WHERE subject = ?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);	
-			preparedStatement.setString(1, test.getSubject());
-			preparedStatement.setBoolean(2, test.isActive());
+			preparedStatement.setBoolean(1, test.isActive());
+			preparedStatement.setString(2, test.getSubject());
 			preparedStatement.executeUpdate();
 			return true;
 		} catch(SQLException e) {
@@ -47,15 +47,14 @@ public class TestDao {
 		}
 	}
 	
-	public boolean deleteTest(Test test){
+	public boolean deleteTest(String subject){
 		try{
-			String sqlQuery = "DELETE FROM test" + "WHERE subject = ?";
+			String sqlQuery = "DELETE FROM test WHERE subject=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-			preparedStatement.setString(0,test.getSubject());
-			ResultSet rs = preparedStatement.executeQuery();
+			preparedStatement.setString(1, subject);
+			preparedStatement.executeUpdate();
 			return true;
 		}catch(Exception e) {
-			System.out.println("dans catch");
 			e.printStackTrace();
 			return false;
 		}
@@ -72,7 +71,6 @@ public class TestDao {
 				test.setSubject(rs.getString("subject"));
 				}
 		}catch(Exception e) {
-			System.out.println("dans catch");
 			e.printStackTrace();
 		}
 		return test;
@@ -82,6 +80,22 @@ public class TestDao {
 		List<Test> tests = new ArrayList<Test>();
 		try {
 			String sqlQuery = "SELECT * FROM test";
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+			ResultSet rs = preparedStatement.executeQuery();
+			while (rs.next()) {
+				Test tmp = new Test(rs.getString("subject"));
+				tests.add(tmp);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return tests;
+	}
+	
+	public List<Test> getAllActiveTests() {
+		List<Test> tests = new ArrayList<Test>();
+		try {
+			String sqlQuery = "SELECT * FROM test WHERE isActive=true";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {

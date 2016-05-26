@@ -42,6 +42,6 @@
 			</form>
 		</c:if>		
 		<br/>
-		<a href="question">Return</a>
+		<a href="test?subject=${test.getSubject()}&action=show">Return</a>
 	</body>
 </html>
