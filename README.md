@@ -8,19 +8,12 @@ Pagination : http://theopentutorials.com/examples/java-ee/jsp/pagination-in-serv
 
 <hr>
 
-### Note TD2
+### TO DO :
 
-- Evaluation:
+- Email : mache plus envoie lors de la création d'un compte
+- Gestion questionnaire by admin
+- Gestion parcours (parcours lors de réponses à un questionnaire)
 
-Rapport : à rendre avant mardi de la dernière semaine
-Soutenance : Fonctionnalités à implémenter. Pas partie graphique/estétique. Dur de faire tout le projet : pas un soucis -> Possibilité de supprimer une partie. Expliquer ses choix de suppression durant la soutenance (pas fais, pas niveau / pas fais, même chose que avant ...)
+- Refaire modèle avec le modèle dans init.sql (reprendre et modifier le dia) -> incorporer dans rapport et prezi.
 
-- But : Ce qu'on a fait fonctionne bien !
-
-But travail minimal : partie admin et stagiaire avec filtre des 2 parties; faire seulement admin : gestion questionnaire/réponse/user -> Travail suffisant. Avec controller; si ajout partie participant : tant mieux.
-
-- PS perso : Pour soutenance faire un prezi/ppt joli. beau rapport latex -> Lien overleaf soon.
-
-<hr>
-
-### Possibilité de se voir Mardi prochain pour parler du projet ?
+Finir prezi + rapport avec avancement (demain midi) (screen appli en annexes)
