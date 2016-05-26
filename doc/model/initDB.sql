@@ -51,9 +51,12 @@ CREATE TABLE answer (
 CREATE TABLE recordAnswers (
 	recordId INTEGER NOT NULL,
 	answerId INTEGER NOT NULL,
+	choice BOOLEAN,
 	PRIMARY KEY (recordId, answerId),
 	FOREIGN KEY (recordId) REFERENCES record(recordId) ON DELETE CASCADE,
 	FOREIGN KEY (answerId) REFERENCES answer(answerId) ON DELETE CASCADE
 );
+
+-- ALTER TABLE recordAnswers ADD COLUMN choice BOOLEAN;
 	
 
