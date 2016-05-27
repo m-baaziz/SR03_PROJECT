@@ -49,6 +49,16 @@ public class Test {
 		return this.questions;
 	}
 	
+	public List<Question> getActiveQuestions() {
+		List<Question> questions = new ArrayList<Question>();
+		for (int i=0; i<this.questions.size(); i++) {
+			if (questions.get(i).isActive()) {
+				questions.add(questions.get(i));
+			}
+		}
+		return questions;
+	}
+	
 	public boolean setSubject(String subject) {
 		this.subject = subject;
 		return true;

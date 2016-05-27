@@ -88,7 +88,7 @@ public class TestController extends HttpServlet {
 				}
 				session.setAttribute("step", step);
 				Test test = dao.getTestBySubject(subject);
-				List<Question> questions = test.getQuestions();
+				List<Question> questions = test.getActiveQuestions();
 				if (step >= questions.size()) {
 					session.removeAttribute("step");
 					if (session.getAttribute("records") != null) {
