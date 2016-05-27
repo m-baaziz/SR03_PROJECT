@@ -6,17 +6,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 // import java.util.ArrayList;
 // import java.util.List;
+import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
+import beans.Answer;
+import beans.RecordAnswers;
 import beans.Records;
 import utils.Db;
-import dao.DAO;
 
 public class RecordsDao extends DAO<Records> {
 	
 	private Connection conn;
+	private RecordAnswersDao recordAnswersDao;
 	
 	public RecordsDao() {
 		conn = Db.getConnection();
+		recordAnswersDao = new RecordAnswersDao();
 	}	
 	
 	private final static String TABLE        = "record";
@@ -31,14 +37,39 @@ public class RecordsDao extends DAO<Records> {
 	public String getTableName() {
 		return TABLE;
 	}
+	
+	public boolean insertWithRecordAnswers(Records records) {
+		try{
+			String sqlQuery = "INSERT INTO record (email, subject, score, duration) "
+					+ "VALUES (?, ?, ?, ?)";
+			PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, records.getEmail());
+			preparedStatement.setString(2, records.getSubject());
+			preparedStatement.setInt(3, records.getScore());
+			preparedStatement.setTime(4, records.getDuration());
+			preparedStatement.executeUpdate();
+			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+			if (records.hasRecordAnswers() && generatedKeys.next()) {
+				List<RecordAnswers> recordAnswers = records.getRecordAnswers();
+				for (int i=0; i<recordAnswers.size(); i++) {
+					RecordAnswers recordAnswer = recordAnswers.get(i);
+					recordAnswer.setRecordId(generatedKeys.getInt(1));
+					recordAnswersDao.insert(recordAnswer);
+				}
+			}
+			return true;
+		} catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	@Override
 	protected Records toBean(ResultSet rs, Records r) throws SQLException {
 		if (r == null)
 			r = new Records();
 		r.setRecordId(rs.getInt("recordId"));
-		r.setDate(rs.getDate("date"));
-		r.setDuration(rs.getInt("duration"));
+		r.setDuration(rs.getTime("duration"));
 		r.setScore(rs.getInt("score"));
 		r.setEmail(rs.getString("email"));
 		r.setSubject(rs.getString("subject"));
@@ -69,7 +100,7 @@ public class RecordsDao extends DAO<Records> {
 				ps.setString(2, r.getSubject());
 				break;
 			case INSERT_QUERY:
-				ps.setInt(1, r.getDuration());
+				ps.setTime(1, r.getDuration());
 				ps.setInt(2, r.getScore());
 				ps.setString(3, r.getEmail());
 				ps.setString(4, r.getSubject());

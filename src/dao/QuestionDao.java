@@ -105,6 +105,8 @@ public class QuestionDao {
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
 				Question tmp = new Question(rs.getInt("questionId"), rs.getString("subject"), rs.getString("questionText"));
+				List<Answer> answers = answerDao.getAllAnswersByQuestion(tmp.getQuestionId());
+				tmp.addAnswers(answers);
 				questions.add(tmp);
 			}
 		} catch(Exception e) {

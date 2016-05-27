@@ -11,9 +11,14 @@ public class RecordAnswers {
 		this.answerId = answerId;
 		this.choice = choice;
 	}
-
+	
 	public RecordAnswers() {
 		
+	}
+
+	public RecordAnswers(int answerId, boolean choice) {
+		this.answerId = answerId;
+		this.choice = choice;
 	}
 
 	public int getRecordId() {
