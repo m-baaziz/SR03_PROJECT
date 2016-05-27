@@ -66,19 +66,19 @@ public class AnswerDao {
 	}
 	
 	public Answer getAnswerById(int answerId) {
-		Answer answer = new Answer();
 		try {
 			String sqlQuery = "SELECT * FROM answer WHERE id=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setInt(1, answerId);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-				answer.setAnswerText(rs.getString("answerText"));			
+				Answer answer = new Answer(rs.getInt("answerId"), rs.getInt("questionId"), rs.getString("answerText"), rs.getBoolean("isTrue"));
+				return answer;
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		return answer;
+		return null;
 	}
 	
 	public List<Answer> getAllAnswersByQuestion(int questionId){
@@ -89,7 +89,7 @@ public class AnswerDao {
 			preparedStatement.setInt(1, questionId);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				Answer tmp = new Answer(rs.getString("answerText"), rs.getBoolean("isTrue"));
+				Answer tmp = new Answer(rs.getInt("answerId"), rs.getInt("questionId"), rs.getString("answerText"), rs.getBoolean("isTrue"));
 				answers.add(tmp);
 			}
 		} catch(Exception e) {

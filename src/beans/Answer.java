@@ -35,9 +35,14 @@ public class Answer {
 		}
 	} 
 	
-	public Answer(int answerId, int questionId, String answerText, boolean answerIsTrue) throws Exception {
-		if (this.setAnswerId(answerId) && this.setQuestionId(questionId) && this.setAnswerText(answerText) && this.setAnswerTrue()){
+	public Answer(int answerId, int questionId, String answerText, boolean isTrue) throws Exception {
+		if (this.setAnswerId(answerId) && this.setQuestionId(questionId) && this.setAnswerText(answerText)){
 			this.activate();
+			if (isTrue) {
+				this.setAnswerTrue();
+			} else {
+				this.setAnswerFalse();
+			}
 		}else{
 			throw new Exception("Invalid parameter");
 		}
