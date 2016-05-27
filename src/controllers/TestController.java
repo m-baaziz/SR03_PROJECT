@@ -91,7 +91,7 @@ public class TestController extends HttpServlet {
 				List<Question> questions = test.getActiveQuestions();
 				if (step >= questions.size()) {
 					session.removeAttribute("step");
-					if (session.getAttribute("records") != null) {
+					if (step > 0 && session.getAttribute("records") != null) {
 						Records records = (Records) session.getAttribute("records");
 						records.finish();
 						recordsDao.insertWithRecordAnswers(records);

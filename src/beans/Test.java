@@ -52,8 +52,8 @@ public class Test {
 	public List<Question> getActiveQuestions() {
 		List<Question> questions = new ArrayList<Question>();
 		for (int i=0; i<this.questions.size(); i++) {
-			if (questions.get(i).isActive()) {
-				questions.add(questions.get(i));
+			if (this.questions.get(i).isActive()) {
+				questions.add(this.questions.get(i));
 			}
 		}
 		return questions;

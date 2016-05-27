@@ -26,7 +26,7 @@ CREATE TABLE record (
 	duration TIME,
 	PRIMARY KEY (recordId),
 	FOREIGN KEY (subject) REFERENCES test(subject),
-	FOREIGN KEY (email) REFERENCES user(email) ON DELETE CASCADE
+	FOREIGN KEY (email) REFERENCES user(email) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE question (
@@ -35,7 +35,7 @@ CREATE TABLE question (
 	questionText TEXT NOT NULL,
 	isActive BOOLEAN,
 	PRIMARY KEY (questionID),
-	FOREIGN KEY (subject) REFERENCES test(subject) ON DELETE CASCADE
+	FOREIGN KEY (subject) REFERENCES test(subject) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE answer (
@@ -45,7 +45,7 @@ CREATE TABLE answer (
 	isActive BOOLEAN,
 	isTrue BOOLEAN,
 	PRIMARY KEY (answerId),
-	FOREIGN KEY (questionId) REFERENCES question(questionId) ON DELETE CASCADE
+	FOREIGN KEY (questionId) REFERENCES question(questionId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE recordAnswers (
@@ -53,8 +53,8 @@ CREATE TABLE recordAnswers (
 	answerId INTEGER NOT NULL,
 	choice BOOLEAN,
 	PRIMARY KEY (recordId, answerId),
-	FOREIGN KEY (recordId) REFERENCES record(recordId) ON DELETE CASCADE,
-	FOREIGN KEY (answerId) REFERENCES answer(answerId) ON DELETE CASCADE
+	FOREIGN KEY (recordId) REFERENCES record(recordId) ON DELETE CASCADE ON UPDATE CASCADE,
+	FOREIGN KEY (answerId) REFERENCES answer(answerId) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- ALTER TABLE recordAnswers ADD COLUMN choice BOOLEAN;

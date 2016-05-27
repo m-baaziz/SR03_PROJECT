@@ -31,7 +31,7 @@
 								<a href="test?subject=${test.getSubject()}&action=show"> Show</a> <a href="test?subject=${test.getSubject()}&action=delete"> Remove</a>
 							</c:if>
 							<c:if test="${!sessionScope.currentUser.isAdmin()}">
-								<a href="test?subject=${test.getSubject()}"> Launch</a>
+								<a href="test?subject=${test.getSubject()}"> Start</a>
 							</c:if>
 						</td>
 					</tr>

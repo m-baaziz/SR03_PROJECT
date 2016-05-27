@@ -46,6 +46,6 @@
 			<input type="submit" value="Edit" />
 		</form>
 		<br/>
-		<a href="user?email=${user.getEmail()}&action=show">Return</a>
+		<a href="user?email=${user.getEmail()}&action=show">Back</a>
 	</body>
 </html>
