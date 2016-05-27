@@ -82,6 +82,25 @@ public class RecordsDao extends DAO<Records> {
 			return false;
 		}
 	}
+	
+	public Records getBestRecordBySubject(String subject) {
+		try {
+			String sqlQuery = "SELECT * FROM record WHERE subject=? ORDER BY score DESC LIMIT 1";
+			PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
+			preparedStatement.setString(1, subject);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				Records bestRecords = new Records(rs.getInt("recordId"), rs.getTime("duration"), rs.getInt("score"), rs.getString("email"), rs.getString("subject"));
+				List<RecordAnswers> recordAnswers = recordAnswersDao.getByRecordId(bestRecords.getRecordId());
+				bestRecords.addRecordAnswers(recordAnswers);
+				return bestRecords;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	@Override
 	protected Records toBean(ResultSet rs, Records r) throws SQLException {

@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -33,7 +34,18 @@ public class RecordsController extends HttpServlet {
 			return;
 		}
 		List<Records> records = dao.getByEmail(currentUser.getEmail());
+		List<String> subjects = new ArrayList<String>();
+		for (int i=0; i<records.size(); i++) {
+			if (!subjects.contains(records.get(i).getSubject())) {
+				subjects.add(records.get(i).getSubject());
+			}
+		}
+		List<Records> bestRecords = new ArrayList<Records>();
+		for (int i=0; i<subjects.size(); i++) {
+			bestRecords.add(dao.getBestRecordBySubject(subjects.get(i)));
+		}
 		request.setAttribute("records", records);
+		request.setAttribute("bestRecords", bestRecords);
 		view.forward(request, response);
 	}
 }

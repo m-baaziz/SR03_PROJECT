@@ -18,14 +18,35 @@
 				<thead>
 					<tr>					
 						<th>Subject</th>
-						<th>Result</th>
+						<th>Duration</th>
+						<th>My Result</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${records}" var="record">
 						<tr>
-							<td><c:out value="${record.getSubject()}" /></td>				
+							<td><c:out value="${record.getSubject()}" /></td>
+							<td><c:out value="${record.printDuration()}" /></td>				
 							<td><c:out value="${record.scoreToStringOverTwenty()}" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<br/>
+			<h3> Best Records </h3>
+			<br/>
+			<table>
+				<thead>
+					<tr>					
+						<th>Subject</th>
+						<th>Best Results</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${bestRecords}" var="bestRecord">
+						<tr>
+							<td><c:out value="${bestRecord.getSubject()}" /></td>				
+							<td><c:out value="${bestRecord.scoreToStringOverTwenty()}" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -2,9 +2,11 @@ package beans;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class Records {
 
@@ -129,6 +131,12 @@ public class Records {
 			}
 			this.score = score;
 		}
+	}
+	
+	public String printDuration() {
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
+		return sdf.format(this.duration);
 	}
 
 }
