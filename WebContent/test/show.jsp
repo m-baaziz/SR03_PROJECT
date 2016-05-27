@@ -21,25 +21,44 @@
 				<tr><td>Active : </td><td><c:out value="${test.isActive() ? 'True': 'False'}" /></td></tr>
 			</tbody>
 		</table>			
-		Questions :
-		<br/>		
-		<table>
-			<thead>
-				<tr>					
-					<th>Entitled</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${questions}" var="question">
-					<tr>
-						<td><c:out value="${question.getQuestionText()}" /></td>
-						<td><a href="question?action=show"> Show</a> <a href="question?action=delete"> Remove</a></td>
+		<br/>
+		<c:if test="${test.hasQuestion()}">
+			<h3>Questions: </h3>		
+			<table>
+				<thead>
+					<tr>					
+						<th>Entitled</th>
+						<th>Actions</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>	
-		<a href="question?action=create">Add a question</a>
+				</thead>
+				<tbody>
+					<c:forEach items="${questions}" var="question">
+						<tr>
+							<td><c:out value="${question.getQuestionText()}" /></td>
+							<td><a href="question?id=${question.getQuestionId()}&action=edit"> Edit</a> 
+							<a href="question?id=${question.getQuestionId()}&action=delete"> Remove</a></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>	
+		</c:if>
+		<h3>Add a question :</h3> 
+		<br/>
+		<form method="post" action="question">
+			<input type="hidden" value="${test.getSubject()}" name="subject" />
+			<div>Entitled : <input required type="text" name="questionText" /></div>
+			<table>
+				<thead>
+					<th></th><th></th><th>True</th>
+				</thead>
+				<tbody>
+					<tr><td>Answer 1 : </td><td><input type="text" name="answer1" /></td><td><input type="radio" name="trueQuestion" value="1" /></td></tr>
+					<tr><td>Answer 2 : </td><td><input type="text" name="answer2" /></td><td><input type="radio" name="trueQuestion" value="2" /></td></tr>
+					<tr><td>Answer 3 : </td><td><input type="text" name="answer3" /></td><td><input type="radio" name="trueQuestion" value="3" /></td></tr>
+				</tbody>
+			</table>
+			<div><input type="submit" value="Send" /></div>
+		</form>
 		<br/>
 		<a href="test">Back</a>
 	</body>

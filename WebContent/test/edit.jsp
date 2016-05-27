@@ -16,28 +16,15 @@
 		<br/>
 		<br/>
 		<c:if test="${sessionScope.currentUser.isAdmin()}">			
-			<form method="post" action="user">
-				<div>Subject : <input required type="text" name="subject" value="" /></div>							
-				<h3>Questions: </h3>		
-				<table>
-					<thead>
-						<tr>					
-							<th>Entitled</th>
-							<th></th>
-							<th></th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach items="${questions}" var="question">
-							<tr>
-								<td><c:out value="${question.getQuestionText()}" /></td>
-								<td><a href="question?action=edit">Edit</a></td>
-								<td><a href="question?action=delete">Delete</a></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>	
-				<a href="question?action=create">Add a question</a>
+			<form method="post" action="test">
+				<input type="hidden" name="_method" value="put" />
+				<input type="hidden" name="subject" value="${test.getSubject()}" />
+				<div> Active :
+					<select name="isActive">
+						<option ${test.isActive() ? 'selected' : ''} value="true">True</option>
+						<option ${test.isActive() ? '' : 'selected'}  value="false">False</option>
+					</select>
+				</div>
 				<div><input type="submit" value="Send" /></div>
 			</form>
 		</c:if>		

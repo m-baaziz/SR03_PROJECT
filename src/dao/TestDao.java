@@ -13,9 +13,11 @@ import beans.Test;
 
 public class TestDao {
 	private Connection connection;
+	private QuestionDao questionDao;
 	
 	public TestDao() {
 		connection = Db.getConnection();
+		questionDao = new QuestionDao();
 	}
 	
 	public boolean addTest(Test test){
@@ -67,9 +69,16 @@ public class TestDao {
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			preparedStatement.setString(1, subject);
 			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()) {				
+			if (rs.next()) {
 				test.setSubject(rs.getString("subject"));
+				if (rs.getBoolean("isActive")) {
+					test.activate();
+				} else {
+					test.desactivate();
 				}
+				List<Question> questions = questionDao.getQuestionsBySubject(rs.getString("subject"));
+				test.addQuestions(questions);
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -83,7 +92,10 @@ public class TestDao {
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				Test tmp = new Test(rs.getString("subject"));
+				String subject = rs.getString("subject");
+				Test tmp = new Test(subject, rs.getBoolean("isActive"));
+				List<Question> questions = questionDao.getQuestionsBySubject(subject);
+				tmp.addQuestions(questions);
 				tests.add(tmp);
 			}
 		} catch(Exception e) {
@@ -99,7 +111,10 @@ public class TestDao {
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				Test tmp = new Test(rs.getString("subject"));
+				String subject = rs.getString("subject");
+				Test tmp = new Test(subject, true);
+				List<Question> questions = questionDao.getQuestionsBySubject(subject);
+				tmp.addQuestions(questions);
 				tests.add(tmp);
 			}
 		} catch(Exception e) {

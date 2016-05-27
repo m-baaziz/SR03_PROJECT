@@ -29,6 +29,7 @@ public class TestController extends HttpServlet {
 				Test test = dao.getTestBySubject(subject);
 				HttpSession session = request.getSession(true);
 				session.setAttribute("test", test);
+				session.setAttribute("questions", test.getQuestions());
 				view.forward(request, response);
 			} else {
 				response.sendRedirect(onErrorPath);
@@ -99,9 +100,13 @@ public class TestController extends HttpServlet {
 				dao.addTest(test);
 				response.sendRedirect("test?subject="+subject+"&action=show");
 				return;
+			} else {
+				response.sendRedirect("test");
+				return;
 			}
 		}catch (Exception e){
 			e.printStackTrace();
+			response.sendRedirect("test");
 		}
 		
 	}
