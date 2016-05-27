@@ -26,16 +26,23 @@
 					<tr>
 						<td><c:out value="${test.getSubject()}" /></td>
 						<c:if test="${sessionScope.currentUser.isAdmin()}"><td><c:out value="${test.isActive() ? 'True': 'False'}" /></td></c:if>				
-						<td><c:if test="${sessionScope.currentUser.isAdmin()}"><a href="test?subject=${test.getSubject()}&action=show"> Show</a> <a href="test?subject=${test.getSubject()}&action=delete"> Remove</a></c:if></td>
+						<td>
+							<c:if test="${sessionScope.currentUser.isAdmin()}">
+								<a href="test?subject=${test.getSubject()}&action=show"> Show</a> <a href="test?subject=${test.getSubject()}&action=delete"> Remove</a>
+							</c:if>
+							<c:if test="${!sessionScope.currentUser.isAdmin()}">
+								<a href="test?subject=${test.getSubject()}&step=1"> Launch</a>
+							</c:if>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>		
 		<br/>
-		Add a new test :
-		<br/>
-		<br/>
-		<c:if test="${sessionScope.currentUser.isAdmin()}">			
+		<c:if test="${sessionScope.currentUser.isAdmin()}">
+			Add a new test :
+			<br/>
+			<br/>			
 			<form method="post" action="test">
 				<div>Subject : <input required type="text" name="subject"/></div>							
 				<div><input type="submit" value="Send" /></div>

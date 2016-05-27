@@ -14,10 +14,11 @@
 	<body>
 		<h1> Dashboard </h1>
 		<h2> Welcome <c:out value="${currentUser.getName()}" /> ! </h2>
-		<h3><a href="user?action=show">My profile</a></h3> <h3><a href="user?action=administrate">Users</a></h3>
-		<h3><a href="test">Tests</a></h3>
+		<h3><a href="user?action=show">My profile</a></h3>
 		<c:if test="${currentUser.isAdmin()}">
+			<h3><a href="user?action=administrate">Users</a></h3>
 		</c:if>
+		<h3><a href="test">Tests</a></h3>
 		<br/>
 		<a href="user?action=logout">Logout</a>
 	</body>
