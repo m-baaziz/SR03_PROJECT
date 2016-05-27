@@ -4,13 +4,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 // import java.util.ArrayList;
 // import java.util.List;
 import java.util.List;
 
 import com.mysql.jdbc.Statement;
 
-import beans.Answer;
 import beans.RecordAnswers;
 import beans.Records;
 import utils.Db;
@@ -36,6 +36,25 @@ public class RecordsDao extends DAO<Records> {
 	@Override
 	public String getTableName() {
 		return TABLE;
+	}
+	
+	public List<Records> getByEmail(String email) {
+		List<Records> records = new ArrayList<Records>();
+		try {
+			String sqlQuery = "SELECT * FROM record WHERE email=?";
+			PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
+			preparedStatement.setString(1, email);
+			ResultSet rs = preparedStatement.executeQuery();
+			while(rs.next()) {
+				Records tmp = new Records(rs.getInt("recordId"), rs.getTime("duration"), rs.getInt("score"), rs.getString("email"), rs.getString("subject"));
+				List<RecordAnswers> recordAnswers = recordAnswersDao.getByRecordId(tmp.getRecordId());
+				tmp.addRecordAnswers(recordAnswers);
+				records.add(tmp);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return records;
 	}
 	
 	public boolean insertWithRecordAnswers(Records records) {

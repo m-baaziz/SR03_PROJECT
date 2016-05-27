@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import beans.RecordAnswers;
+import beans.Records;
 import utils.Db;
 
 public class RecordAnswersDao extends DAO<RecordAnswers> {
@@ -27,6 +29,23 @@ public class RecordAnswersDao extends DAO<RecordAnswers> {
 	@Override
 	public String getTableName() {
 		return TABLE;
+	}
+	
+	public List<RecordAnswers> getByRecordId(int recordId) {
+		List<RecordAnswers> recordAnswers = new ArrayList<RecordAnswers>();
+		try {
+			String sqlQuery = "SELECT * FROM recordAnswers WHERE recordId=?";
+			PreparedStatement preparedStatement = conn.prepareStatement(sqlQuery);
+			preparedStatement.setInt(1, recordId);
+			ResultSet rs = preparedStatement.executeQuery();
+			while(rs.next()) {
+				RecordAnswers tmp = new RecordAnswers(rs.getInt("recordId"), rs.getInt("answerId"), rs.getBoolean("choice"));
+				recordAnswers.add(tmp);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return recordAnswers;
 	}
 
 	@Override

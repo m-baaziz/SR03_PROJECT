@@ -13,23 +13,23 @@
 	</head>
 	<body>
 		<c:if test="${!sessionScope.currentUser.isAdmin()}">
-		<h1> My Records </h1>
-		<table>
-			<thead>
-				<tr>					
-					<th>Subject</th>
-					<th>Result</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${records}" var="record">
-					<tr>
-						<td><c:out value="${record.getSubject()}" /></td>				
-						<td><c:out value="${record.scoreToStringOverTwenty()}" /></td>
+			<h1> My Records </h1>
+			<table>
+				<thead>
+					<tr>					
+						<th>Subject</th>
+						<th>Result</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<c:forEach items="${records}" var="record">
+						<tr>
+							<td><c:out value="${record.getSubject()}" /></td>				
+							<td><c:out value="${record.scoreToStringOverTwenty()}" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 		</c:if>
 		<a href="user">Back</a>		
 	</body>

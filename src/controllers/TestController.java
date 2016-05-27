@@ -29,6 +29,7 @@ public class TestController extends HttpServlet {
 		super();
 		dao = new TestDao();
 		questionDao = new QuestionDao();
+		recordsDao = new RecordsDao();
 	}
 	
 	protected void redirectWithTest(HttpServletRequest request, HttpServletResponse response, String toPath, String onErrorPath) {
@@ -93,7 +94,7 @@ public class TestController extends HttpServlet {
 					if (session.getAttribute("records") != null) {
 						Records records = (Records) session.getAttribute("records");
 						records.finish();
-						recordsDao.insert(records);
+						recordsDao.insertWithRecordAnswers(records);
 					}
 					response.sendRedirect("test");
 					return;

@@ -17,7 +17,7 @@ public class Records {
 	private Date endTime;
 	private List<RecordAnswers> recordAnswers; 
 	
-	public Records(int recordI, Time duration, int score, String email, String subject) {
+	public Records(int recordId, Time duration, int score, String email, String subject) {
 		super();
 		this.recordId = recordId;
 		this.duration = duration;
