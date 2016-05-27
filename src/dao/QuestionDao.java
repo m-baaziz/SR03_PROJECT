@@ -7,28 +7,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import utils.Db;
+import com.mysql.jdbc.Statement;
+
+import beans.Answer;
 import beans.Question;
-import beans.User;
+import utils.Db;
 
 public class QuestionDao {
 	
 	private Connection connection;
+	private AnswerDao answerDao;
 	
 	public QuestionDao() {
 		connection = Db.getConnection();
+		answerDao = new AnswerDao();
 	}
 	
 	public boolean addQuestion(Question question){
 		try{
-			String sqlQuery = "INSERT INTO question (questionId, subject, questionText, isActive) "
-					+ "VALUES (?, ?, ?, ?)";
-			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-			preparedStatement.setInt(1, question.getQuestionId());
-			preparedStatement.setString(2, question.getSubject());
-			preparedStatement.setString(3, question.getQuestionText());
-			preparedStatement.setBoolean(4, question.isActive());
+			String sqlQuery = "INSERT INTO question (subject, questionText, isActive) "
+					+ "VALUES (?, ?, ?)";
+			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, question.getSubject());
+			preparedStatement.setString(2, question.getQuestionText());
+			preparedStatement.setBoolean(3, question.isActive());
 			preparedStatement.executeUpdate();
+			ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+			if (question.hasAnswer() && generatedKeys.next()) {
+				List<Answer> answers = question.getAnswers();
+				for (int i=0; i<answers.size(); i++) {
+					Answer answer = answers.get(i);
+					answer.setQuestionId(generatedKeys.getInt(1));
+					answerDao.addAnswer(answer);
+				}
+			}
 			return true;
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -52,15 +64,14 @@ public class QuestionDao {
 		}
 	}
 	
-	public boolean deleteQuestion(Question question){
+	public boolean deleteQuestion(int id){
 		try{
-			String sqlQuery = "DELETE FROM question" + "WHERE questionId = ?";
+			String sqlQuery = "DELETE FROM question WHERE questionId=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-			preparedStatement.setInt(1,question.getQuestionId());
-			ResultSet rs = preparedStatement.executeQuery();
+			preparedStatement.setInt(1,id);
+			preparedStatement.executeUpdate();
 			return true;
 		}catch(Exception e) {
-			System.out.println("dans catch");
 			e.printStackTrace();
 			return false;
 		}
@@ -69,16 +80,17 @@ public class QuestionDao {
 	public Question getQuestionById(int questionId) {
 		Question question = new Question();
 		try {
-			String sqlQuery = "SELECT * FROM question WHERE id=?";
+			String sqlQuery = "SELECT * FROM question WHERE questionId=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-			preparedStatement.setInt(1,question.getQuestionId());
+			preparedStatement.setInt(1,questionId);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next()) {
-			question.setQuestionText(rs.getString("questionText"));
-			question.setSubject(rs.getString("subject"));
+				question.setQuestionText(rs.getString("questionText"));
+				question.setSubject(rs.getString("subject"));
+				List<Answer> answers = answerDao.getAllAnswersByQuestion(questionId);
+				question.addAnswers(answers);
 			}
 		} catch(Exception e) {
-			System.out.println("dans catch");
 			e.printStackTrace();
 		}
 		return question;
@@ -96,7 +108,6 @@ public class QuestionDao {
 				questions.add(tmp);
 			}
 		} catch(Exception e) {
-			System.out.println("dans catch");
 			e.printStackTrace();
 		}
 		return questions;

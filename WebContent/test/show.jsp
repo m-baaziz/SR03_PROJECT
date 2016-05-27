@@ -35,7 +35,7 @@
 					<c:forEach items="${questions}" var="question">
 						<tr>
 							<td><c:out value="${question.getQuestionText()}" /></td>
-							<td><a href="question?id=${question.getQuestionId()}&action=edit"> Edit</a> 
+							<td><a href="question?id=${question.getQuestionId()}&action=show"> Show</a> 
 							<a href="question?id=${question.getQuestionId()}&action=delete"> Remove</a></td>
 						</tr>
 					</c:forEach>

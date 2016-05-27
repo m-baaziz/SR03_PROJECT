@@ -12,18 +12,19 @@
 		<title> SR03 Project Website </title>
 	</head>
 	<body>
-		<h1> Question </h1>
-		<br/>
-		<a href="question?action=edit">Edit</a>
+		<h1> <c:out value="${question.getQuestionText()}" /> </h1>
 		<br/>
 		<table>
 			<tbody>
-				<tr><td>Subject : </td><td><c:out value="${currentQuestion.getSubject()}" /></td></tr>
-				<tr><td>Entitled : </td><td><c:out value="${currentQuestion.getQuestionText()}" /></td></tr>
-				<tr><td>Is Active : </td><td><c:out value="${currentQuestion.isActive() ? 'True': 'False'}" /></td></tr>
+				<tr><td>Is Active : </td><td><c:out value="${question.isActive() ? 'True': 'False'}" /></td></tr>
+				<tr><td>Good answer : </td><td><c:out value="${question.getGoodAnswer().getAnswerText()}"></c:out></td></tr>
+				<tr><td>Bad answers : </td><td></td></tr>
+				<c:forEach items="${question.getBadAnswers()}" var="badAnswer">
+					<tr><td></td><td><c:out value="${badAnswer.getAnswerText()}"></c:out></td></tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<br/>
-		<a href="question">Return</a>
+		<a href="test?&subject=${question.getSubject()}&action=show">Return</a>
 	</body>
 </html>

@@ -26,7 +26,7 @@ public class AnswerDao {
 			preparedStatement.setInt(1, answer.getAnswerId());
 			preparedStatement.setInt(2, answer.getQuestionId());		
 			preparedStatement.setString(3, answer.getAnswerText());
-			preparedStatement.setBoolean(5, answer.setAnswerTrue());
+			preparedStatement.setBoolean(4, answer.isActive());
 			preparedStatement.setBoolean(5, answer.isTrue());
 			preparedStatement.executeUpdate();
 			return true;
@@ -60,7 +60,6 @@ public class AnswerDao {
 			preparedStatement.executeQuery();
 			return true;
 		}catch(Exception e) {
-			System.out.println("dans catch");
 			e.printStackTrace();
 			return false;
 		}
@@ -77,7 +76,6 @@ public class AnswerDao {
 				answer.setAnswerText(rs.getString("answerText"));			
 			}
 		} catch(Exception e) {
-			System.out.println("dans catch");
 			e.printStackTrace();
 		}
 		return answer;
@@ -91,7 +89,7 @@ public class AnswerDao {
 			preparedStatement.setInt(1, questionId);
 			ResultSet rs = preparedStatement.executeQuery();
 			while (rs.next()) {
-				Answer tmp = new Answer(rs.getString("subject"));
+				Answer tmp = new Answer(rs.getString("answerText"), rs.getBoolean("isTrue"));
 				answers.add(tmp);
 			}
 		} catch(Exception e) {
