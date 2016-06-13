@@ -92,7 +92,6 @@ public class UserController extends HttpServlet {
 						return;
 					}
 				} catch (Exception e) {
-					System.out.println(e.getMessage());
 					response.sendRedirect("user");
 					return;
 				}
